@@ -111,7 +111,7 @@ task :publish do
 	#
 	# Taken from http://deadprogrammersociety.blogspot.com/2008/01/making-s3-folders-in-ruby.html
     class Blog < S3Object
-		set_current_bucket_to 'syntacticbayleaves'
+		set_current_bucket_to "www.syntacticbayleaves.com"
 
 		alias :original_store :store
 		def store(key, data, bucket = nil, options = {})
