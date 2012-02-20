@@ -35,7 +35,7 @@ namespace :generate do
 		bottom = File.open("content/layout/bottom.html").read
 		Dir.glob("content/posts/*.html").each do |post_file|
 			post = File.open(post_file).read
-			generated_file = "build/posts/" + File.basename(post)
+			generated_file = "build/" + File.basename(post_file)
 			File.open(generated_file, "w") do |f|
 				f.write top + post + bottom
 			end
@@ -60,7 +60,7 @@ task :new_post do
 		[max, File.basename(file, ".html").to_i].max
 	end + 1) 
 	date = Date.today.strftime "%a, %b %-d, %Y"
-	post_path = "/posts/#{post_id}.html"
+	post_path = "#{post_id}.html"
 
 	template = ERB.new <<-EOF
 	<article id="post-<%= post_id %>">
@@ -78,6 +78,7 @@ end
 task :clean do
 	rm_rf "build"
 end
+
 
 namespace :server do
 	http_server = "python -m SimpleHTTPServer"
