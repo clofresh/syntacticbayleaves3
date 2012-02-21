@@ -31,27 +31,28 @@ namespace :generate do
 
 	desc "Generates the individual post files"
 	task :posts => ["build", "build/posts"] do
-		top = File.open("content/layout/top.html").read
-		bottom = File.open("content/layout/bottom.html").read
+		template = ERB.new(File.open("content/layout/shell.html.erb").read)
+
 		Dir.glob("content/posts/*.html").each do |post_file|
-			post = File.open(post_file).read
+			content = File.open(post_file).read
 			generated_file = "build/" + File.basename(post_file)
 			File.open(generated_file, "w") do |f|
-				f.write top + post + bottom
+				f.write template.result(binding)
 			end
 		end
+
+
 	end
 
 
 	task :index => ["build"]  do
-		top = File.open("content/layout/top.html").read
-		bottom = File.open("content/layout/bottom.html").read
+		template = ERB.new(File.open("content/layout/shell.html.erb").read)
 
-		posts = Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
+		content = Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
 			File.open(post_file).read
 		end.join("\n")
 
-		File.open("build/index.html", "w").write(top + posts + bottom)
+		File.open("build/index.html", "w").write template.result(binding)
 	end
 end
 
@@ -62,12 +63,7 @@ task :new_post do
 	date = Date.today.strftime "%a, %b %-d, %Y"
 	post_path = "#{post_id}.html"
 
-	template = ERB.new <<-EOF
-	<article id="post-<%= post_id %>">
-	  <h2><a name="post-<%= post_id %>" class="permalink icon-bookmark" href="<%= post_path %>">&nbsp;</a> TITLE <small><%= date %></h2>
-	  BODY
-	</article>
-	EOF
+	template = ERB.new(File.open("content/layout/post.html.erb").read)
 	new_post = template.result(binding)
 
 	file_path = "content" + post_path
@@ -76,7 +72,7 @@ task :new_post do
 end
 
 task :clean do
-	rm_rf "build"
+	rm_rf "build/*"
 end
 
 
