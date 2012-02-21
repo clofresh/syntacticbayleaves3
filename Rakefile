@@ -129,7 +129,7 @@ task :new_post do
 	template = ERB.new(File.open("content/layout/post.html.erb").read)
 	new_post = template.result(binding)
 
-	file_path = "content" + post_path
+	file_path = "content/posts/" + post_path
 	puts file_path
 	File.open(file_path, "w") { |io| io.write(new_post) }
 end
