@@ -70,7 +70,7 @@ namespace :generate do
 			date =  Date.strptime(doc.css("article .date").text.strip, "%a, %b %d, %Y")
 			{
 				:title => doc.css("article .title").text,
-				:body  => doc.css("article .body").text,
+				:body  => doc.css("article .body"),
 				:url   => base_url + doc.css("article a.permalink").attribute("href"),
 				:date  => date
 			}
