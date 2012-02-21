@@ -2,6 +2,9 @@ require 'erb'
 require 'date'
 require 'fileutils'
 
+def domain
+	"www.syntacticbayleaves.com"
+end
 
 task :default => [:clean, :generate]
 
@@ -15,7 +18,7 @@ task :generate => ["generate:assets", "generate:content"]
 
 namespace :generate do
 	task :assets => [:img, :css, :js]
-	task :content => [:posts, :index]
+	task :content => [:posts, :index, :rss]
 
 	task :img => ["build/img"] do 
 		sh "cp assets/img/* build/img/" 
@@ -54,6 +57,30 @@ namespace :generate do
 
 		File.open("build/index.html", "w").write template.result(binding)
 	end
+
+	task :rss => ["build"] do
+		require 'nokogiri'
+
+		template = ERB.new(File.open("content/layout/shell.rss.erb").read)
+		base_url = "http://#{domain}/"
+		last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
+		pub_date = last_build_date
+		ttl = 60 # minutes
+
+		content = Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
+			doc = Nokogiri::HTML(File.open(post_file))
+			date =  Date.strptime(doc.css("article .date").text.strip, "%a, %b %d, %Y").strftime("%a, %d %b %Y %T GMT")
+			{
+				:title => doc.css("article .title").text,
+				:body  => doc.css("article .body").text,
+				:url   => base_url + doc.css("article a.permalink").attribute("href"),
+				:date  => date
+			}
+		end
+
+		File.open("build/index.rss.xml", "w").write template.result(binding)
+	end
+
 end
 
 task :new_post do
@@ -107,7 +134,7 @@ task :publish do
 	#
 	# Taken from http://deadprogrammersociety.blogspot.com/2008/01/making-s3-folders-in-ruby.html
     class Blog < S3Object
-		set_current_bucket_to "www.syntacticbayleaves.com"
+		set_current_bucket_to domain
 
 		alias :original_store :store
 		def store(key, data, bucket = nil, options = {})
