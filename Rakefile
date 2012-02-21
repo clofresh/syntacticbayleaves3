@@ -90,21 +90,25 @@ namespace :generate do
 		File.open("build/index.rss.xml", "w").write template.result(binding)
 	end
 
-	task :sitemap => ["build"] do
+	task :google_verification => ["build"] do
+		sh "cp content/layout/google847fc09924ef9dd8.html build/"
+	end
+
+	task :sitemap => [:google_verification, "build"] do
 		last_date = Date.new
 		content = parse_posts.map do |post|
 			last_date = [last_date, post[:date]].max
 			post.update({
 				:changefreq => "never",
 				:priority   => "0.6",
-				:date 		=> post[:date].strftime("%a, %d %b %Y %T GMT")
+				:date 		=> post[:date].strftime("%Y-%m-%d")
 			})
 		end
 
 
 		content << {
 					:url	=> base_url,
-					:date 		=> last_date.strftime("%a, %d %b %Y %T GMT"),
+					:date 		=> last_date.strftime("%Y-%m-%d"),
 					:changefreq	=> "weekly",
 					:priority	=> "0.3"
 				}
