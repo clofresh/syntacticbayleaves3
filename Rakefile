@@ -6,6 +6,10 @@ def domain
 	"www.syntacticbayleaves.com"
 end
 
+def base_url
+	"http://#{domain}/"
+end
+
 task :default => [:clean, :generate]
 
 directory "build"
@@ -58,18 +62,12 @@ namespace :generate do
 		File.open("build/index.html", "w").write template.result(binding)
 	end
 
-	task :rss => ["build"] do
+	def parse_posts
 		require 'nokogiri'
 
-		template = ERB.new(File.open("content/layout/shell.rss.erb").read)
-		base_url = "http://#{domain}/"
-		last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
-		pub_date = last_build_date
-		ttl = 60 # minutes
-
-		content = Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
+		Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
 			doc = Nokogiri::HTML(File.open(post_file))
-			date =  Date.strptime(doc.css("article .date").text.strip, "%a, %b %d, %Y").strftime("%a, %d %b %Y %T GMT")
+			date =  Date.strptime(doc.css("article .date").text.strip, "%a, %b %d, %Y")
 			{
 				:title => doc.css("article .title").text,
 				:body  => doc.css("article .body").text,
@@ -77,8 +75,42 @@ namespace :generate do
 				:date  => date
 			}
 		end
+	end
+
+	task :rss => ["build"] do
+		template = ERB.new(File.open("content/layout/shell.rss.erb").read)
+		last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
+		pub_date = last_build_date
+		ttl = 60 # minutes
+		content = parse_posts.map do |post|
+			post[:date] = post[:date].strftime("%a, %d %b %Y %T GMT")
+			post
+		end
 
 		File.open("build/index.rss.xml", "w").write template.result(binding)
+	end
+
+	task :sitemap => ["build"] do
+		last_date = Date.new
+		content = parse_posts.map do |post|
+			last_date = [last_date, post[:date]].max
+			post.update({
+				:changefreq => "never",
+				:priority   => "0.6",
+				:date 		=> post[:date].strftime("%a, %d %b %Y %T GMT")
+			})
+		end
+
+
+		content << {
+					:url	=> base_url,
+					:date 		=> last_date.strftime("%a, %d %b %Y %T GMT"),
+					:changefreq	=> "weekly",
+					:priority	=> "0.3"
+				}
+		
+		template = ERB.new(File.open("content/layout/sitemap.xml.erb").read)
+		File.open("build/sitemap.xml", "w").write template.result(binding)
 	end
 
 end
