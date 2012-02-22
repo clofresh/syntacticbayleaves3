@@ -159,6 +159,7 @@ end
 task :publish do
 	require 'rubygems'
 	require 'aws/s3'
+	require 'md5'
 	include AWS::S3
 
 	# This is an extension to S3Object that supports the emerging 'standard' for virtual folders on S3.
@@ -193,6 +194,22 @@ task :publish do
 		def store_folder(key, bucket = nil, options = {})
 			original_store(key + "_$folder$", "", bucket, options) # store the magic entry that emulates a folder
 		end
+
+		def self.store_if_changed(key, data, bucket = nil, options = {})
+			changed = if exists?(key, bucket) then
+				Blog.find(key, bucket).etag != MD5.hexdigest(data)
+			else
+				true
+			end
+
+			if changed then
+				puts "Uploading #{key}" 
+				store key, data, bucket, options
+			else
+				puts "Skipping #{key}" 
+			end
+
+		end
 	end
 
 	Base.establish_connection!(
@@ -203,8 +220,7 @@ task :publish do
 	cd "build" do
 		Dir.glob("**/*").reject {|filename| File.directory? filename}.each do |filename|
 			contents = File.open(filename).read
-			puts filename
-		  	Blog.store filename, contents, :use_virtual_directories => true, :access => :public_read
+		  	Blog.store_if_changed filename, contents, domain, :use_virtual_directories => true, :access => :public_read
 		end
 	end
 
