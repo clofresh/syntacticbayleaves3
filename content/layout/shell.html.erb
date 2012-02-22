@@ -77,8 +77,8 @@
     <div class="row content">
       <section class="offset1 span8 posts">
         <%= content %>
+        <div class="back-home"></div>
       </section><!-- /posts -->
-
       <nav class="offset1 span2">
         <ul class="nav nav-list">
           <li class="nav-header">Facets of me</li>
@@ -109,6 +109,13 @@
     </footer>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        if (window.location.pathname !== "/") {
+          $('.back-home').html('<a href="/" title="There\'s more bloggliness where that came from."><i class="icon-arrow-left"></i> Go back home</a>')
+        }
+      })
+    </script>
 
   </body>
 
