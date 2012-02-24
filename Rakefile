@@ -22,7 +22,7 @@ task :generate => ["generate:assets", "generate:content"]
 
 namespace :generate do
 	task :assets => [:img, :css, :js]
-	task :content => [:posts, :index, :rss]
+	task :content => [:posts, :index, :rss, :sitemap, :google_verification, :old]
 
 	task :img => ["build/img"] do 
 		sh "cp assets/img/* build/img/" 
@@ -115,6 +115,10 @@ namespace :generate do
 		
 		template = ERB.new(File.open("content/layout/sitemap.xml.erb").read)
 		File.open("build/sitemap.xml", "w").write template.result(binding)
+	end
+
+	task :old => ["build"] do
+		sh "cp -r content/old/* build/"
 	end
 
 end
