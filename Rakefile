@@ -3,7 +3,7 @@ require 'date'
 require 'fileutils'
 
 def domain
-	"www.syntacticbayleaves.com"
+	ENV["BLOG_S3_BUCKET"]
 end
 
 def base_url
