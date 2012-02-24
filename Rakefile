@@ -30,10 +30,12 @@ namespace :generate do
 
 	task :css => ["build/css"] do 
 		sh "cp assets/css/*.min.css build/css/" 
+		sh "cp assets/css/syntacticbayleaves.css build/css/" 
 	end	
 
 	task :js => ["build/js"] do 
 		sh "cp assets/js/*.min.js build/js/" 
+		sh "cp assets/js/syntacticbayleaves.js build/js/" 
 	end	
 
 	desc "Generates the individual post files"
