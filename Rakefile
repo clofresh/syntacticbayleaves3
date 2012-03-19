@@ -18,21 +18,28 @@ directory "build/img"
 directory "build/css"
 directory "build/js"
 
+desc "Generates all the assets and content"
 task :generate => ["generate:assets", "generate:content"]
 
 namespace :generate do
+	desc "Generates all the assets"
 	task :assets => [:img, :css, :js]
+
+	desc "Generates all the content"
 	task :content => [:posts, :index, :rss, :sitemap, :google_verification, :old]
 
+	desc "Generates the image assets"
 	task :img => ["build/img"] do 
 		sh "cp assets/img/* build/img/" 
 	end	
 
+	desc "Generates the css assets"
 	task :css => ["build/css"] do 
 		sh "cp assets/css/*.min.css build/css/" 
 		sh "cp assets/css/syntacticbayleaves.css build/css/" 
 	end	
 
+	desc "Generates the javascript assets"
 	task :js => ["build/js"] do 
 		sh "cp assets/js/*.min.js build/js/" 
 		sh "cp assets/js/syntacticbayleaves.js build/js/" 
@@ -53,7 +60,7 @@ namespace :generate do
 
 	end
 
-
+	desc "Generates the blog home page"
 	task :index => ["build"]  do
 		template = ERB.new(File.open("content/layout/shell.html.erb").read)
 
@@ -79,6 +86,7 @@ namespace :generate do
 		end
 	end
 
+	desc "Generates the rss feed"
 	task :rss => ["build"] do
 		template = ERB.new(File.open("content/layout/shell.rss.erb").read)
 		last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
@@ -92,10 +100,12 @@ namespace :generate do
 		File.open("build/index.rss.xml", "w").write template.result(binding)
 	end
 
+	desc "Generates the Google verification file"
 	task :google_verification => ["build"] do
 		sh "cp content/layout/google847fc09924ef9dd8.html build/"
 	end
 
+	desc "Generates the sitemap"
 	task :sitemap => [:google_verification, "build"] do
 		last_date = Date.new
 		content = parse_posts.map do |post|
@@ -119,12 +129,14 @@ namespace :generate do
 		File.open("build/sitemap.xml", "w").write template.result(binding)
 	end
 
+	desc "Generates the old content from previous blogs"
 	task :old => ["build"] do
 		sh "cp -r content/old/* build/"
 	end
 
 end
 
+desc "Starts a new post"
 task :new_post do
 	post_id = "%08d" % (Dir.glob('content/posts/*.html').inject(0) do |max, file| 
 		[max, File.basename(file, ".html").to_i].max
@@ -140,6 +152,7 @@ task :new_post do
 	File.open(file_path, "w") { |io| io.write(new_post) }
 end
 
+desc "Clears the generate files"
 task :clean do
 	rm_rf "build/*"
 end
@@ -147,12 +160,15 @@ end
 
 namespace :server do
 	http_server = "python -m SimpleHTTPServer"
+
+	desc "Starts the dev server"
 	task :start => [:stop] do |t|
 		cd "build" do 
 			sh "#{http_server} >> ../http.log 2>&1 &"
 		end
 	end
 
+	desc "Stops the dev server"
 	task :stop do |t|
 		begin
 			sh "pkill -f '#{http_server}'"
@@ -162,6 +178,7 @@ namespace :server do
 	end
 end
 
+desc "Publishes the generate files to S3"
 task :publish do
 	require 'rubygems'
 	require 'aws/s3'
