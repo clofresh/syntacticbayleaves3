@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'erb'
 require 'date'
 require 'fileutils'
@@ -180,7 +182,6 @@ end
 
 desc "Publishes the generate files to S3"
 task :publish do
-	require 'rubygems'
 	require 'aws/s3'
 	require 'md5'
 	include AWS::S3
