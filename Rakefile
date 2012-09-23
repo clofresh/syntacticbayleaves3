@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'erb'
 require 'date'
 require 'fileutils'
+require 'uri'
 
 def domain
 	ENV["BLOG_S3_BUCKET"]
@@ -73,12 +74,30 @@ namespace :generate do
 		File.open("build/index.html", "w").write template.result(binding)
 	end
 
-	def parse_posts
+	def parse_posts(current_path)
 		require 'nokogiri'
+
+		def full_url(url, current_path)
+			if url != nil and url != '' and URI.parse(url).scheme == nil
+				if url.start_with? '/'
+					base_url.sub(/\/$/, '') + url
+				else
+					base_url.sub(/\/$/, '') + current_path + url
+				end
+			else
+				url
+			end
+		end
 
 		Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
 			doc = Nokogiri::HTML(File.open(post_file))
 			date =  Date.strptime(doc.css("article .date").text.strip, "%a, %b %d, %Y")
+			doc.css("article .body img").each do |img|
+				img['src'] = full_url img['src'], current_path
+			end
+			doc.css("article .body a").each do |a|
+				a['href'] = full_url a['href'], current_path
+			end
 			{
 				:title => doc.css("article .title").text,
 				:body  => doc.css("article .body"),
@@ -94,7 +113,7 @@ namespace :generate do
 		last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
 		pub_date = last_build_date
 		ttl = 60 # minutes
-		content = parse_posts.map do |post|
+		content = parse_posts('/').map do |post|
 			post[:date] = post[:date].strftime("%a, %d %b %Y %T GMT")
 			post
 		end
@@ -110,7 +129,7 @@ namespace :generate do
 	desc "Generates the sitemap"
 	task :sitemap => [:google_verification, "build"] do
 		last_date = Date.new
-		content = parse_posts.map do |post|
+		content = parse_posts('/').map do |post|
 			last_date = [last_date, post[:date]].max
 			post.update({
 				:changefreq => "never",
