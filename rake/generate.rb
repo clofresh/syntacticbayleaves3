@@ -68,13 +68,16 @@ namespace :generate do
   task :rss => ["build"] do
     template = ERB.new(File.open("content/layout/shell.rss.erb").read)
     last_build_date = DateTime.now.strftime "%a, %d %b %Y %T GMT"
-    pub_date = last_build_date
+    pub_date = DateTime.new
     ttl = 60 # minutes
     content = Posts.all.map do |post_file|
       post = Posts.parse_post post_file
-      post[:date] = post[:date].strftime("%a, %d %b %Y %T GMT")
+      post_date = post[:date]
+      pub_date = [post_date, pub_date].max
+      post[:date] = post_date.strftime "%a, %d %b %Y %T GMT"
       post
     end
+    pub_date = pub_date.strftime "%a, %d %b %Y %T GMT"
 
     File.open("build/index.rss.xml", "w").write template.result(binding)
   end
