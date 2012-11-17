@@ -40,7 +40,7 @@ namespace :generate do
   desc "Generates the individual post files"
   task :posts => ["build", "build/posts"] do
     template = ERB.new(File.open("content/layout/shell.html.erb").read)
-
+    config = get_config
     Dir.glob("content/posts/*.html").each do |post_file|
       content = File.open(post_file).read
       generated_file = "build/" + File.basename(post_file)
@@ -55,6 +55,7 @@ namespace :generate do
   desc "Generates the blog home page"
   task :index => ["build"]  do
     template = ERB.new(File.open("content/layout/shell.html.erb").read)
+    config = get_config
 
     content = Dir.glob("content/posts/*.html").sort.reverse.map do |post_file|
       File.open(post_file).read
