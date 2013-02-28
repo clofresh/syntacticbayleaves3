@@ -1,9 +1,17 @@
 body * {
   font-family: 'Balthazar', sans-serif;
 }
-code, pre {
+code, pre, blockquote {
   font-family: 'Inconsolata', monospace;
 }
+
+code {
+  padding: 0px;
+  color: black;
+  background-color: transparent;
+  border: 0px;
+}
+
 p {
   font-size: 18px;
   line-height: 22px;
