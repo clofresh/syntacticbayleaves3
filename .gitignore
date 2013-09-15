@@ -1,3 +1,4 @@
 build
 http.log
 content/posts/drafts
+.DS_Store
