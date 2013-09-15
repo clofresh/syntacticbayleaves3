@@ -18,23 +18,24 @@ namespace :generate do
   task :assets => [:img, :css, :js]
 
   desc "Generates all the content"
-  task :content => [:posts, :index, :rss, :sitemap, :google_verification, :old]
+  task :content => [:posts, :projects, :index, :rss, :sitemap,
+                    :google_verification, :old]
 
   desc "Generates the image assets"
   task :img => ["build/img"] do 
-    sh "cp assets/img/* build/img/" 
+    sh "cp -r assets/img/* build/img/" 
   end 
 
   desc "Generates the css assets"
   task :css => ["build/css"] do 
-    sh "cp assets/css/*.min.css build/css/" 
-    sh "cp assets/css/syntacticbayleaves.css build/css/" 
+    sh "cp -r assets/css/*.min.css build/css/" 
+    sh "cp -r assets/css/syntacticbayleaves.css build/css/" 
   end 
 
   desc "Generates the javascript assets"
   task :js => ["build/js"] do 
-    sh "cp assets/js/*.min.js build/js/" 
-    sh "cp assets/js/syntacticbayleaves.js build/js/" 
+    sh "cp -r assets/js/*.min.js build/js/" 
+    sh "cp -r assets/js/syntacticbayleaves.js build/js/" 
   end 
 
   desc "Generates the individual post files"
@@ -48,8 +49,14 @@ namespace :generate do
         f.write template.result(binding)
       end
     end
+  end
 
-
+  desc "Generates the projects page"
+  task :projects => ["build"] do
+    template = ERB.new(File.open("content/layout/shell.html.erb").read)
+    config = get_config
+    content = File.open("content/projects.html.erb").read
+    File.open("build/projects.html", "w").write template.result(binding)
   end
 
   desc "Generates the blog home page"
@@ -100,14 +107,22 @@ namespace :generate do
       })
     end
 
-
+    # Add the home page to the sitemap
     content << {
-          :url    => base_url,
-          :date       => last_date.strftime("%Y-%m-%d"),
-          :changefreq => "weekly",
-          :priority   => "0.3"
-        }
+      :url        => base_url,
+      :date       => last_date.strftime("%Y-%m-%d"),
+      :changefreq => "weekly",
+      :priority   => "0.3",
+    }
     
+    # Add the projects page to the sitemap
+    content << {
+      :url        => base_url + "projects.html",
+      :date       => "2013-09-15",
+      :changefreq => "monthly",
+      :priority   => "0.7",
+    }
+
     template = ERB.new(File.open("content/layout/sitemap.xml.erb").read)
     File.open("build/sitemap.xml", "w").write template.result(binding)
   end
