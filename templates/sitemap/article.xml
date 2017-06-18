@@ -1,0 +1,6 @@
+  <url>
+    <loc>http://www.syntacticbayleaves.com/${BLOG_ID}.html</loc>
+    <lastmod>${BLOG_ISO8601_DATE}</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>

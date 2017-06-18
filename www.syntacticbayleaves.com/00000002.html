@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="http://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000002">
+    <h2>
+      <a name="post-00000002" class="permalink icon-bookmark" href="00000002.html">&nbsp;</a>
+      <span class="title">Switching from OS X to Linux Mint 12</span>
+      <small class="date">Sun, Feb 19, 2012</small>
+    </h2>
+    <div class="body">
+    <div class="cover"><a href="img/00000002-desktop.png"><img src="img/00000002-desktop.png" /></a></div>
+
+<p>I've been an OS X user since Tiger's launch in 2005. I got a G4 Powerbook as a graduation present from my parents, and I loved how coherent an operating system it was. The biggest win for me was that it was unix-y enough to be a nice programming environment (Aquaemacs ftw) while at the same time having nice apps for normal day life things like Quicksilver, iTunes, iPhoto and Adium.  I was coming from the frankenstein user experience of Windows XP + Cygwin environment, so OS X was a breathe of fresh air. I messed a bit with Gnome desktop on Fedora Core 3, but either I was still too much of a Linux n00b, or it still sucked too much to be useful (hello recompiling the kernel on video driver updates).</p>
+
+<p>Fast forward to 2012, where my workstation is an iMac running OS X Snow Leopard, my music player of choice is Spotify, my editor is Sublime Text 2 and I spend a large portion of my time in iTerm2 in fullscreen mode with 3 or 4 terminal tabs split into 6 panes each. I refuse to upgrade to Lion because I hate the one-app-per-virtual-desktop-but-never-quite-knowing-the-order-of-the-desktops paradigm. The scrolling/scrollbars, and Mail.app are nicer, but not worth losing out on the virtual desktop issue. Also, the App Store can go to hell and die.</p>
+
+<p>When Apple announced Mountain Lion, I could see that they were pushing for more iPadification and not much else to get excited about, so on a whim, I decided to give Linux desktop another shot. Apparently <a href="http://linuxmint.com/">Linux Mint</a> became the hot new distro in town when Ubuntu pushed out the much-maligned Unity desktop onto everyone, so I torrented the Linux Mint 12 "Lisa" iso, partitioned off a 20GB piece of my hard drive and gave it a go.</p>
+
+<p>The install was pretty painless. It discovered the partition right away and started installing in the background while the wizard asked me the usual install questions, which I thought was a nice touch. It installed GRUB on my Windows partition, which threw me off for a bit, but nothing a little Googling couldn't unearth.</p>
+
+<p> But yeah, everything installed fine, and after a <a href="http://community.linuxmint.com/software/view/software-center">Software Center</a> package upgrade, I was running the latest and greatest Gnome 3 desktop. The things that you normally feared would fail on Linux worked fine: sound, video, wifi, builtin volume/brightness buttons, suspend, Flash, they all worked without any intervention on my part. Had to enable two-finger scrolling in the settings pane, but that's about it. I proceeded to get the same apps that I had worked with on OS X: Chrome, <a href="http://www.spotify.com/us/blog/archives/2010/07/12/linux/">Spotify</a> (sadly, doesn't have Spotify Apps yet), Sublime Text 2 (boo, no apt repo!), Dropbox. There's no shortage of terminals on Linux but I settled with <a href="http://community.linuxmint.com/software/view/terminator">Terminator</a> for the split panes (not quite ready for <a href="http://xmonad.org/">Xmonad</a>). I couldn't find a particularly nice Twitter client, which is surprisingly coming from OS X/iOS land where there's dozens of clients that was decent. I ended up settling on <a href="http://community.linuxmint.com/software/view/gwibber">Gwibber</a>, even though it had a comically low score of -81 in Software Center.
+</p>
+
+<p>Also, can I just say, apt-get for the muthaf'ing win? Apt-get is great not just for getting all your development dependencies with zero fuss (homebrew on OS X is mostly good enough for that), but for all your system updates. Instead of getting annoying updater popups from Apple that require a system reboot, or every single app trying to do their own updates when opening the app, or the App Store where you need to explicitly go out of your way to discover if there are new updates and install them yourself. That is one paradigm that Apple definitely should not have copied from iOS. Nope, apt-get just goes and does its thing. You might get a notification from Software Center to run your updates, which is just a wrapper around apt-get, but for the most part you could probably just cron an <code>apt-get upgrade &amp;&amp; apt-get update</code> every week and you'll be fine.</p>
+
+<p>Gnome Shell is a pretty nice desktop environment. I like that they've created a (Mission Control + Quicksilver)-like view when you press the super key. They've managed to show all your open windows on the current workspace, plus a high level preview of all your workspaces, plus a search-as-you-type app search without it being a visual overload. I like it much more than OS X's Mission Control, though I do miss being able to search for songs from Quicksilver. I'm sure there's a shell extension that can do that, just haven't found it.</p>
+
+<p>Speaking of shell extensions, I love that I can install or disable extensions right from the <a href="https://extensions.gnome.org/">extensions website</a>. My favorite extension so far is <a href="https://extensions.gnome.org/extension/28/gtile/">gTile</a>, a nice way to resize your windows into fixed grid sizes (again, not ready for Xmonad). Apparently shell extensions are still bleeding edge, as there aren't great documentation on them. There's <a href="http://live.gnome.org/GnomeShell/Extensions">a brief intro</a> on the Gnome wiki, but it doesn't try to help you with the GUI API, just on setup. It's nice that the extensions are Javascript and CSS, but the GUI API just looks like a thin wrapper around the <a href="http://www.clutter-project.org/">Clutter</a> API, which is C++, and doesn't look any prettier in Javascript. Still, it's a start. I'd like to create a nice Twitter shell extension at some point.</p>
+
+<p>So, this is day 4 of me switching from OS X to Linux Mint 12, and I am loving it. My next steps are to figure out a nice cross-platform notetaking replacement for Evernote, which I'm leaning towards plain Markdown files + Dropbox, and to set up my Datadog dev environment, which should be a cinch since our prod environment also uses apt-get. Maybe also trying out a native email client, though the Gmail web app plus a shell extension for email notifications are working out fine.</p>
+
+<p>Hooray for the Linux community!</p>
+
+<h4>Thumbnails</h4>
+<ul class="thumbnails">
+  <li class="span2"><a href="img/00000002-desktop.png"><img src="img/00000002-desktop.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gwibber-software-center.png"><img src="img/00000002-gwibber-software-center.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gnome-shell.png"><img src="img/00000002-gnome-shell.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gtile.png"><img src="img/00000002-gtile.png" /></a></li>
+</ul>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="http://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="http://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2017 Carlo Cabanilla
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+
+  </body>
+
+</html>

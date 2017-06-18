@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/clofresh
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://syntacticbayleaves.com
+  * I am clofresh (https://keybase.io/clofresh) on keybase.
+  * I have a public key ASAHFxEeutbD2NI1URA1nBLyjk8xg7rJnTuOsvxPPNOWnwo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101a8bc7f8bd8cf567cd77a7961d220a8234a04b0426141547b9ed5dbc1fb1506e30a",
+            "host": "keybase.io",
+            "kid": "01200717111ebad6c3d8d2355110359c12f28e4f3183bac99d3b8eb2fc4f3cd3969f0a",
+            "uid": "01ee1a33d4ea1c4a07027ab72b0bda19",
+            "username": "clofresh"
+        },
+        "service": {
+            "hostname": "syntacticbayleaves.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.18"
+    },
+    "ctime": 1480093090,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1480093253,
+        "hash": "73bac0f97cd589fcbd4805401c33083deb3acc9f0cdabf78d1df9c6984424c4c8c72266e5cdd1b11c9daeb3c9a5152237ea3c93652a38549c206c16b9ce47107",
+        "seqno": 734907
+    },
+    "prev": "afb79817a9bc0e4550a50481960099b74d49a0e1fcac6c0c73726a0f3bfb1945",
+    "seqno": 11,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgBxcRHrrWw9jSNVEQNZwS8o5PMYO6yZ07jrL8TzzTlp8Kp3BheWxvYWTFAv57ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxYThiYzdmOGJkOGNmNTY3Y2Q3N2E3OTYxZDIyMGE4MjM0YTA0YjA0MjYxNDE1NDdiOWVkNWRiYzFmYjE1MDZlMzBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMDcxNzExMWViYWQ2YzNkOGQyMzU1MTEwMzU5YzEyZjI4ZTRmMzE4M2JhYzk5ZDNiOGViMmZjNGYzY2QzOTY5ZjBhIiwidWlkIjoiMDFlZTFhMzNkNGVhMWM0YTA3MDI3YWI3MmIwYmRhMTkiLCJ1c2VybmFtZSI6ImNsb2ZyZXNoIn0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJzeW50YWN0aWNiYXlsZWF2ZXMuY29tIiwicHJvdG9jb2wiOiJodHRwOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4xOCJ9LCJjdGltZSI6MTQ4MDA5MzA5MCwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsIm1lcmtsZV9yb290Ijp7ImN0aW1lIjoxNDgwMDkzMjUzLCJoYXNoIjoiNzNiYWMwZjk3Y2Q1ODlmY2JkNDgwNTQwMWMzMzA4M2RlYjNhY2M5ZjBjZGFiZjc4ZDFkZjljNjk4NDQyNGM0YzhjNzIyNjZlNWNkZDFiMTFjOWRhZWIzYzlhNTE1MjIzN2VhM2M5MzY1MmEzODU0OWMyMDZjMTZiOWNlNDcxMDciLCJzZXFubyI6NzM0OTA3fSwicHJldiI6ImFmYjc5ODE3YTliYzBlNDU1MGE1MDQ4MTk2MDA5OWI3NGQ0OWEwZTFmY2FjNmMwYzczNzI2YTBmM2JmYjE5NDUiLCJzZXFubyI6MTEsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RATSVKiI4gwSrpZFS63kWpDaLo9+q88vhuL+FCwb0uXa7jSO2eUCt9ISbeICSHudTsYNqDJ53Ix8qj5VSxp6x9C6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIIR/7Y+tRkPJNHW1XqKPiC245RY3wJ6HDxA7qj+Ykf1wo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/clofresh
+
+==================================================================
+

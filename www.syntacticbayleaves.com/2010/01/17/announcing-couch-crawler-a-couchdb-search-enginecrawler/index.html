@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+	<title>Syntactic Bay Leaves - Announcing Couch Crawler, a CouchDB search engine/crawler</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="screen,projection" href="/wp-content/themes/blogtxt/style.css" title="blog.txt" />
+	<link rel="stylesheet" type="text/css" media="print" href="/wp-content/themes/blogtxt/print.css" />
+	<link rel="alternate" type="application/rss+xml" href="/feed/" title="Syntactic Bay Leaves RSS feed" />
+	<link rel="alternate" type="application/rss+xml" href="/comments/feed/" title="Syntactic Bay Leaves comments RSS feed" />
+	<link rel="pingback" href="/xmlrpc.php" />
+
+<link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves &raquo; Announcing Couch Crawler, a CouchDB search engine/crawler Comments Feed" href="/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/feed/" />
+<link rel='stylesheet' id='openid-css'  href='/wp-content/plugins/openid/f/openid.css?ver=519' type='text/css' media='all' />
+<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='/wp-content/plugins/openid/f/openid.js?ver=519'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Syntactic Bay Leaves' href='/' />
+<link rel='start' title='Getting Involved with SproutCore' href='/2008/07/24/getting-involved-with-sproutcore/' />
+<link rel='prev' title='Javascript sucks at sorting integers' href='/2010/01/13/javascript-sucks-at-sorting-integers/' />
+<link rel='next' title='CouchDB: the last RESTful JSON store you&#8217;ll ever need' href='/2010/02/04/couchdb-the-last-restful-json-store-youll-ever-need/' />
+<meta name="generator" content="WordPress 3.0.1" />
+<link rel='canonical' href='/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/' />
+<link rel='shortlink' href='/?p=121' />
+
+<link rel="stylesheet" href="/wp-content/plugins/wp-syntax/wp-syntax.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" media="screen,projection" href="/wp-content/themes/blogtxt/layouts/2c-r.css" />
+
+<style type="text/css" media="screen,projection">
+/*<![CDATA[*/
+/* CSS inserted by blog.txt theme options */
+	body{font-size:100%;}
+	body,div.comments h3.comment-header span.comment-count,div.entry-content ul.xoxo li.hentry span.entry-title{font-family:tahoma,geneva,sans-serif;}
+	div#wrapper{width:60em;}
+	div.hfeed .entry-title,div.hfeed .page-title,div.comments h3,div.entry-content h2,div.entry-content h3,div.entry-content h4,div.entry-content h5,div.entry-content h6,div#header div#blog-description,div#header div.archive-description{font-family:tahoma,geneva,sans-serif;}
+	div#header h1#blog-title,div.sidebar ul li h3{font-family:tahoma,geneva,sans-serif;}
+	body input#s,div.entry-content div.page-link,div.entry-content p.attachment-name,div.entry-content q,div.comments ol.commentlist q,div.formcontainer div.form-input input,div.formcontainer div.form-textarea textarea,div.hentry div.entry-meta,div.sidebar{font-family:tahoma,geneva,sans-serif;}
+	div.hfeed div.hentry{text-align:left;}
+	body div#wrapper{margin:5em auto 0 auto;padding:0 1em;}
+/*]]>*/
+</style>
+
+</head>
+
+<body class="wordpress y2010 m08 d11 h01 single s-y2010 s-m01 s-d17 s-h09 s-category-couchdb s-category-lucene s-category-python s-author-admin">
+
+<div id="wrapper">
+	<div id="container">
+		<div id="content">
+
+			<div id="header">
+				<h1 id="blog-title"><a href="/" title="Syntactic Bay Leaves">Syntactic Bay Leaves</a></h1>
+				<div id="blog-description">Pungent programming, by Carlo Cabanilla</div>
+			</div><!-- #header -->
+	
+			<div class="access"><span class="content-access"><a href="#content" title="Skip to content">Skip to content</a></span></div>
+
+			<div id="globalnav"><ul id="menu"><li class="page_item_home home-link"><a href="/" title="Syntactic Bay Leaves" rel="home">Home</a></li><li class="page_item page-item-2"><a href="/about/" title="About">About</a></li></ul></div>
+
+			<div class="hfeed">
+
+
+				<div id="post-121" class="hentry p1 post publish author-admin category-couchdb category-lucene category-python y2010 m01 d17 h09">
+					<h2 class="entry-title">Announcing Couch Crawler, a CouchDB search engine/crawler</h2>
+					<div class="entry-content">
+<p>Hi! So, for fun, I made <a href="http://github.com/clofresh/couch-crawler" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">couch-crawler</a>, a search engine and crawler on top of the very excellent <a href="http://github.com/rnewson/couchdb-lucene" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">couchdb-lucene</a>. I wanted to create a hackable search engine for my work intranet using modern tools. <a href="http://lucene.apache.org/java/docs/" onclick="javascript:pageTracker._trackPageview('/outbound/article/lucene.apache.org');">Lucene</a> is great, but the <a href="http://lucene.apache.org/nutch/" onclick="javascript:pageTracker._trackPageview('/outbound/article/lucene.apache.org');">Nutch</a> search engine/crawler was kind of annoying to work with. I couldn&#8217;t figure out how to get it to update the search indexes without a restart of the server, which sucks. Also, I just really, really like CouchDB. </p>
+<p>There&#8217;s no real web tier, CouchDB hosts static JavaScript/HTML/CSS files and the UI gets built up dynamically with AJAX calls to CouchDB. It&#8217;s kind of nice to be able to cut out a whole layer of glue code. </p>
+<p>Templating is done with <a href="http://github.com/janl/mustache.js" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">mustache.js</a>, a JavaScript templating language that does a good job of being a dumb template language, making you define your presentation logic in JavaScript, where it should be. </p>
+<p>On the indexing side of things, there&#8217;s a crawler written in Python that pulls down html, parses it with BeautifulSoup, extracts useful text content to be indexed then follows links within the page to a specified max depth. It probably could be smarter and parallel-er, but I wanted to start with a simple design and iterate over it.</p>
+<p>The couchdb-lucene indexer indexes the title, url and contents, and saves the first 140 characters from the contents in the index to display with search results. </p>
+<p><a href="http://github.com/clofresh/couch-crawler" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">Ch-ch-check it out</a> and let me know what you think.</p>
+<p>P.S. If you use <a href="http://github.com/mxcl/homebrew" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">Homebrew</a> for your OS X packaging needs, I have a fork of homebrew with <a href="http://github.com/clofresh/homebrew/blob/couchdb-lucene/Library/Formula/couchdb-lucene.rb" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">a couchdb-lucene formula</a> for easy installation.</p>
+
+
+					</div>
+
+<!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/"
+    dc:identifier="/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/"
+    dc:title="Announcing Couch Crawler, a CouchDB search engine/crawler"
+    trackback:ping="/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/trackback/" />
+</rdf:RDF> -->
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-6369205852477839";
+/* 468x60, created 2/10/10 */
+google_ad_slot = "4624827275";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+				</div><!-- .post -->
+
+<div class="comments">
+
+	<h3 class="comment-header" id="numcomments">Comments <span class="comment-count">2</span></h3>
+	<ol id="comments" class="commentlist">
+		<li id="comment-72" class="comment c-y2010 c-m01 c-d28 c-h07 alt c1">
+			<span class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/c3643199517fdb9047d0f5d447f01e11?s=16&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D16&amp;r=G' class='photo avatar avatar-16 photo' height='16' width='16' /> <span class="fn n">Victor Mireyev</span> wrote:</span>
+			<p>Hi!<br />
+You&#8217;ve got a cool idea with couchdb crawler.<br />
+Have you seen scrapy crawler (scrapy.org)?<br />
+It&#8217;s built on top of Twisted and it&#8217;s smart.</p>
+			<span class="comment-meta">Posted <abbr class="comment-published" title="2010-01-17T21:26:05+0000">28 Jan 2010 at 7:14 pm</abbr> <a class="comment-permalink" href="#comment-72" title="Permalink to this comment">&para;</a> </span>
+		</li>
+
+		<li id="comment-78" class="comment c-y2010 c-m01 c-d30 c-h01 c2">
+			<span class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/864d18d843ab2b7ee5154a37a9b2fbdb?s=16&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D16&amp;r=G' class='photo avatar avatar-16 photo' height='16' width='16' /> <span class="fn n"><a href="http://syntacticbayleaves.com"   rel='external nofollow' class='url url'>Carlo Cabanilla</a></span> wrote:</span>
+			<p>Hey Victor,</p>
+<p>Thanks for the suggestion of Scrapy, I&#8217;ll definitely check it out. I created a branch for an Erlang-based crawler, but I definitely missed Python&#8217;s html parsing niceness. The fact that it uses Twisted (and not threads) is a big plus.</p>
+			<span class="comment-meta">Posted <abbr class="comment-published" title="2010-01-17T21:26:05+0000">30 Jan 2010 at 1:31 am</abbr> <a class="comment-permalink" href="#comment-78" title="Permalink to this comment">&para;</a> </span>
+		</li>
+
+
+	</ol><!-- #comments .commentlist -->
+
+
+
+	<h3 class="comment-header" id="numpingbacks">Trackbacks &amp; Pingbacks <span class="comment-count">3</span></h3>
+	<ol id="pingbacks" class="commentlist">
+
+		<li id="comment-58" class="pingback c-y2010 c-m01 c-d17 c-h09 alt c1">
+			<span class="pingback-meta vcard">From <span class="fn n url org"><a href="http://topsy.com/tb/bit.ly/8D8t5O" onclick="javascript:pageTracker._trackPageview('/outbound/commentauthor/topsy.com');"  rel='external nofollow' class='url'>Tweets that mention Syntactic Bay Leaves - Announcing Couch Crawler, a CouchDB search engine/crawler -- Topsy.com</a></span> on <abbr class="comment-published" title="2010-01-17T21:26:05+0000">17 Jan 2010 at 9:40 pm</abbr> <a class="pingback-permalink" href="#comment-58" title="Permalink to this pingback">&para;</a> </span>
+			<p>[...] This post was mentioned on Twitter by CouchDB, Carlo Cabanilla. Carlo Cabanilla said: Announcing Couch Crawler, a couchdb-lucene search engine/crawler <a href="http://bit.ly/8D8t5O" onclick="javascript:pageTracker._trackPageview('/outbound/comment/bit.ly');" rel="nofollow">http://bit.ly/8D8t5O</a> #couchdb [...]</p>
+		</li>
+
+		<li id="comment-59" class="trackback c-y2010 c-m01 c-d18 c-h12 c2">
+			<span class="pingback-meta vcard">From <span class="fn n url org"><a href="http://www.ubervu.com/conversations/syntacticbayleaves.com/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/" onclick="javascript:pageTracker._trackPageview('/outbound/commentauthor/www.ubervu.com');"  rel='external nofollow' class='url'>uberVU - social comments</a></span> on <abbr class="comment-published" title="2010-01-17T21:26:05+0000">18 Jan 2010 at 12:20 am</abbr> <a class="pingback-permalink" href="#comment-59" title="Permalink to this pingback">&para;</a> </span>
+			<p><strong>Social comments and analytics for this post&#8230;</strong></p>
+<p>This post was mentioned on Twitter by clofresh: Announcing Couch Crawler, a couchdb-lucene search engine/crawler <a href="http://bit.ly/8D8t5O" onclick="javascript:pageTracker._trackPageview('/outbound/comment/bit.ly');" rel="nofollow">http://bit.ly/8D8t5O</a> #couchdb&#8230;</p>
+		</li>
+
+		<li id="comment-60" class="pingback c-y2010 c-m01 c-d18 c-h06 alt c3">
+			<span class="pingback-meta vcard">From <span class="fn n url org"><a href="http://php-app-engine.com/2010/search/announcing-couch-crawler-a-couchdb-search-enginecrawler/" onclick="javascript:pageTracker._trackPageview('/outbound/commentauthor/php-app-engine.com');"  rel='external nofollow' class='url'>Announcing Couch Crawler, a CouchDB search engine/crawler &rsaquo; ec2base</a></span> on <abbr class="comment-published" title="2010-01-17T21:26:05+0000">18 Jan 2010 at 6:43 pm</abbr> <a class="pingback-permalink" href="#comment-60" title="Permalink to this pingback">&para;</a> </span>
+			<p>[...] <a href="/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/"  rel="nofollow">/2010/01/17/announcing-couch-crawler-a-couchdb-search-enginecrawler/</a> [...]</p>
+		</li>
+
+
+	</ol><!-- #pingbacks .commentlist -->
+
+
+
+</div><!-- .comments -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous">&laquo; <a href="/2010/01/13/javascript-sucks-at-sorting-integers/" rel="prev">Javascript sucks at sorting integers</a></div>
+					<div class="nav-next"><a href="/2010/02/04/couchdb-the-last-restful-json-store-youll-ever-need/" rel="next">CouchDB: the last RESTful JSON store you&#8217;ll ever need</a> &raquo;</div>
+				</div>
+
+			</div><!-- .hfeed -->
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="sidebar">
+		<ul>
+			<li id="home-link">
+				<h3><a href="http://syntacticbayleaves.com" title="Syntactic Bay Leaves">&laquo; Home</a></h3>
+			</li>
+			<li class="entry-meta">
+				<h3>About This Post</h3>
+				<ul>
+					<li>Written by <span class="entry-author author vcard"><a class="url fn" href="/author/admin/" title="View all posts by Carlo">Carlo</a></span></li>
+					<li><abbr class="published" title="2010-01-17T21:26:05+0000">January 17th, 2010 at 9:26 pm</abbr></li>
+									</ul>
+			</li>
+			<li class="entry-category">
+				<h3>Categories</h3>
+				<ul>
+					<li><a href="/category/programming/couchdb/" title="View all posts in CouchDB" rel="category tag">CouchDB</a></li><li><a href="/category/programming/lucene/" title="View all posts in Lucene" rel="category tag">Lucene</a></li><li><a href="/category/programming/python/" title="View all posts in Python" rel="category tag">Python</a></li>
+				</ul>
+			</li>
+			<li class="entry-tags">
+				<h3>Tags</h3>
+				<ul>
+					<li><a href="/tag/github/" rel="tag">github</a></li><li><a href="/tag/homebrew/" rel="tag">homebrew</a></li><li><a href="/tag/search/" rel="tag">search</a></li>				</ul>
+			</li>
+		</ul>
+	</div><!-- single.php #primary .sidebar -->
+
+
+	<div id="footer">
+		<span id="theme-link"><a href="http://www.plaintxt.org/themes/blogtxt/" title="blog.txt theme for WordPress" rel="follow designer">blog.txt</a> theme by <span class="vcard"><a class="url fn n" href="http://scottwallick.com/" title="scottwallick.com" rel="follow designer"><span class="given-name">Scott</span><span class="additional-name"> Allan</span><span class="family-name"> Wallick</span></a></span></span>
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+
+<!-- Google Analytics for WordPress | http://yoast.com/wordpress/google-analytics/ -->
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	try {
+		var pageTracker = _gat._getTracker("UA-4116300-1");
+		// Cookied already: 
+		pageTracker._trackPageview();
+	} catch(err) {}
+</script>
+<!-- End of Google Analytics code -->
+
+</body><!-- end transmission -->
+</html>
+<!-- Dynamic page generated in 0.798 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-08-11 01:28:50 -->
+<!-- super cache -->

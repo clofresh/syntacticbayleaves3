@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+	<title>Syntactic Bay Leaves - Merlke: a native Erlang build tool</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="screen,projection" href="/wp-content/themes/blogtxt/style.css" title="blog.txt" />
+	<link rel="stylesheet" type="text/css" media="print" href="/wp-content/themes/blogtxt/print.css" />
+	<link rel="alternate" type="application/rss+xml" href="/feed/" title="Syntactic Bay Leaves RSS feed" />
+	<link rel="alternate" type="application/rss+xml" href="/comments/feed/" title="Syntactic Bay Leaves comments RSS feed" />
+	<link rel="pingback" href="/xmlrpc.php" />
+
+<link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves &raquo; Merlke: a native Erlang build tool Comments Feed" href="/2009/12/10/merlke-a-native-erlang-build-tool/feed/" />
+<link rel='stylesheet' id='openid-css'  href='/wp-content/plugins/openid/f/openid.css?ver=519' type='text/css' media='all' />
+<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='/wp-content/plugins/openid/f/openid.js?ver=519'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Syntactic Bay Leaves' href='/' />
+<link rel='start' title='Getting Involved with SproutCore' href='/2008/07/24/getting-involved-with-sproutcore/' />
+<link rel='prev' title='Idea: Ikea for computer nerds' href='/2009/12/01/idea-ikea-for-computer-nerds/' />
+<link rel='next' title='Javascript sucks at sorting integers' href='/2010/01/13/javascript-sucks-at-sorting-integers/' />
+<meta name="generator" content="WordPress 3.0.1" />
+<link rel='canonical' href='/2009/12/10/merlke-a-native-erlang-build-tool/' />
+<link rel='shortlink' href='/?p=110' />
+
+<link rel="stylesheet" href="/wp-content/plugins/wp-syntax/wp-syntax.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" media="screen,projection" href="/wp-content/themes/blogtxt/layouts/2c-r.css" />
+
+<style type="text/css" media="screen,projection">
+/*<![CDATA[*/
+/* CSS inserted by blog.txt theme options */
+	body{font-size:100%;}
+	body,div.comments h3.comment-header span.comment-count,div.entry-content ul.xoxo li.hentry span.entry-title{font-family:tahoma,geneva,sans-serif;}
+	div#wrapper{width:60em;}
+	div.hfeed .entry-title,div.hfeed .page-title,div.comments h3,div.entry-content h2,div.entry-content h3,div.entry-content h4,div.entry-content h5,div.entry-content h6,div#header div#blog-description,div#header div.archive-description{font-family:tahoma,geneva,sans-serif;}
+	div#header h1#blog-title,div.sidebar ul li h3{font-family:tahoma,geneva,sans-serif;}
+	body input#s,div.entry-content div.page-link,div.entry-content p.attachment-name,div.entry-content q,div.comments ol.commentlist q,div.formcontainer div.form-input input,div.formcontainer div.form-textarea textarea,div.hentry div.entry-meta,div.sidebar{font-family:tahoma,geneva,sans-serif;}
+	div.hfeed div.hentry{text-align:left;}
+	body div#wrapper{margin:5em auto 0 auto;padding:0 1em;}
+/*]]>*/
+</style>
+
+</head>
+
+<body class="wordpress y2010 m08 d11 h01 single s-y2009 s-m12 s-d10 s-h04 s-category-erlang s-author-admin">
+
+<div id="wrapper">
+	<div id="container">
+		<div id="content">
+
+			<div id="header">
+				<h1 id="blog-title"><a href="/" title="Syntactic Bay Leaves">Syntactic Bay Leaves</a></h1>
+				<div id="blog-description">Pungent programming, by Carlo Cabanilla</div>
+			</div><!-- #header -->
+	
+			<div class="access"><span class="content-access"><a href="#content" title="Skip to content">Skip to content</a></span></div>
+
+			<div id="globalnav"><ul id="menu"><li class="page_item_home home-link"><a href="/" title="Syntactic Bay Leaves" rel="home">Home</a></li><li class="page_item page-item-2"><a href="/about/" title="About">About</a></li></ul></div>
+
+			<div class="hfeed">
+
+
+				<div id="post-110" class="hentry p1 post publish author-admin category-erlang y2009 m12 d10 h04">
+					<h2 class="entry-title">Merlke: a native Erlang build tool</h2>
+					<div class="entry-content">
+<p>After seriously diving into <a href="http://github.com/clofresh/esyslog" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">my pet Erlang project</a>, I found myself clinging to Rake to do my builds. It was kind of unsatisfying though, especially once my builds became more complicated (hooray for code-generated parsers, l<a href="http://hopper.squarespace.com/blog/2008/5/29/leex-and-yecc.html" onclick="javascript:pageTracker._trackPageview('/outbound/article/hopper.squarespace.com');">eex/yecc</a>). Why can we have Erlangs all the way down? Futhermore, OTP provides most of the build steps you&#8217;d wanna do to an Erlang project, like <a href="http://www.erlang.org/doc/man/edoc.html" onclick="javascript:pageTracker._trackPageview('/outbound/article/www.erlang.org');">generating documentation</a>, <a href="http://www.erlang.org/doc/man/eunit.html" onclick="javascript:pageTracker._trackPageview('/outbound/article/www.erlang.org');">running tests</a>, and of course <a href="http://www.erlang.org/doc/man/make.html" onclick="javascript:pageTracker._trackPageview('/outbound/article/www.erlang.org');">compilation</a>. However, there was no nice script to tie them all together, so I wrote <a href="http://github.com/clofresh/merlke/" onclick="javascript:pageTracker._trackPageview('/outbound/article/github.com');">Merlke</a>, a native Erlang build tool. (The name is a bastardization of Make and Erl)</p>
+<p>Initially I had Merlke require a build file (merlkefile.erl) but I noticed that the vast majority of Erlang projects followed the same file and directory name conventions, so I just provided reasonable defaults for Merlke, letting you override them if you want with a merlkefile. </p>
+<p>You can run Merlke like this:</p>
+<p><code>merlke test edoc</code></p>
+<p>Which will execute the test task&#8217;s dependencies, the test task, the edoc task&#8217;s dependencies, and the edoc task, in that order. If a dependency has been run earlier, it won&#8217;t be run again. This is all basic dependency-based programming ala make/rake/ant etc. </p>
+<p>Right now it&#8217;s just a static set of tasks defined, but I hope to be able to let you create your own tasks and dependencies. Also, the dialyzer and dist (release) tasks aren&#8217;t implemented yet. I&#8217;ll implement those once I figure out how they work. Patches welcome.</p>
+
+
+					</div>
+
+<!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="/2009/12/10/merlke-a-native-erlang-build-tool/"
+    dc:identifier="/2009/12/10/merlke-a-native-erlang-build-tool/"
+    dc:title="Merlke: a native Erlang build tool"
+    trackback:ping="/2009/12/10/merlke-a-native-erlang-build-tool/trackback/" />
+</rdf:RDF> -->
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-6369205852477839";
+/* 468x60, created 2/10/10 */
+google_ad_slot = "4624827275";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+				</div><!-- .post -->
+
+<div class="comments">
+
+
+</div><!-- .comments -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous">&laquo; <a href="/2009/12/01/idea-ikea-for-computer-nerds/" rel="prev">Idea: Ikea for computer nerds</a></div>
+					<div class="nav-next"><a href="/2010/01/13/javascript-sucks-at-sorting-integers/" rel="next">Javascript sucks at sorting integers</a> &raquo;</div>
+				</div>
+
+			</div><!-- .hfeed -->
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="sidebar">
+		<ul>
+			<li id="home-link">
+				<h3><a href="http://syntacticbayleaves.com" title="Syntactic Bay Leaves">&laquo; Home</a></h3>
+			</li>
+			<li class="entry-meta">
+				<h3>About This Post</h3>
+				<ul>
+					<li>Written by <span class="entry-author author vcard"><a class="url fn" href="/author/admin/" title="View all posts by Carlo">Carlo</a></span></li>
+					<li><abbr class="published" title="2009-12-10T04:54:22+0000">December 10th, 2009 at 4:54 am</abbr></li>
+									</ul>
+			</li>
+			<li class="entry-category">
+				<h3>Categories</h3>
+				<ul>
+					<li><a href="/category/programming/erlang/" title="View all posts in Erlang" rel="category tag">Erlang</a></li>
+				</ul>
+			</li>
+			<li class="entry-tags">
+				<h3>Tags</h3>
+				<ul>
+					<li><a href="/tag/build/" rel="tag">build</a></li><li><a href="/tag/merlke/" rel="tag">merlke</a></li>				</ul>
+			</li>
+		</ul>
+	</div><!-- single.php #primary .sidebar -->
+
+
+	<div id="footer">
+		<span id="theme-link"><a href="http://www.plaintxt.org/themes/blogtxt/" title="blog.txt theme for WordPress" rel="follow designer">blog.txt</a> theme by <span class="vcard"><a class="url fn n" href="http://scottwallick.com/" title="scottwallick.com" rel="follow designer"><span class="given-name">Scott</span><span class="additional-name"> Allan</span><span class="family-name"> Wallick</span></a></span></span>
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+
+<!-- Google Analytics for WordPress | http://yoast.com/wordpress/google-analytics/ -->
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	try {
+		var pageTracker = _gat._getTracker("UA-4116300-1");
+		// Cookied already: 
+		pageTracker._trackPageview();
+	} catch(err) {}
+</script>
+<!-- End of Google Analytics code -->
+
+</body><!-- end transmission -->
+</html>
+<!-- Dynamic page generated in 1.276 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-08-11 01:28:52 -->
+<!-- super cache -->

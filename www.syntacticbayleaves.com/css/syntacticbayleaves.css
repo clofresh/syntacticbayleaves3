@@ -1,0 +1,58 @@
+body * {
+  font-family: 'Balthazar', sans-serif;
+}
+body, p {
+  font-size: 18px;
+}
+code, pre, blockquote {
+  font-family: 'Inconsolata', monospace;
+  font-size: 75%;
+}
+
+code {
+  padding: 0px;
+  color: black;
+  background-color: transparent;
+  border: 0px;
+}
+
+p {
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+header h1 a {
+  color: black;
+}
+footer .license {
+  display: block;
+  vertical-align: top;
+}
+nav * {
+  opacity: 75%;
+}
+article .permalink {
+  position: relative;
+  top: 5px;
+  left: 4px;
+  margin-left: -25px;
+}
+.posts article {
+  margin-bottom: 28px;
+  border-bottom: 1px solid #eee;
+}
+.posts article .cover {
+  height: 120px;
+  margin-bottom:8px;
+  overflow-y: hidden;
+}
+.posts article h2 {
+  line-height: 18px;
+  margin-bottom: 8px;
+}
+.posts article h2 .date {
+  white-space: nowrap;
+}
+header img.feed {
+  width: 14px;
+  height: 14px;
+}

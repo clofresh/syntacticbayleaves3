@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="http://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000008">
+    <h2>
+      <a name="post-00000008" class="permalink icon-bookmark" href="00000008.html">&nbsp;</a>
+      <span class="title">Making animated gifs from command line</span>
+      <small class="date">Tue, Feb 26, 2013</small>
+    </h2>
+    <div class="body">
+    <p><img src="http://media.tumblr.com/e25cefe03c15ac186ef40869cb5f2ade/tumblr_inline_mipkz3mxjb1qz4rgp.gif"/></p>
+
+<p>Sometimes when you're watching your favorite show, a perfect moment comes along that you just gotta capture and share with everyone. That's where the animated gif comes in. Though they're really popular with the kids these days, they're surprisingly hard to make. Luckily there's some powerful open source command line tools that can help you: <a href="http://www.ffmpeg.org/">ffmpeg</a>, <a href="http://www.imagemagick.org/">ImageMagick</a> and <a href="http://www.lcdf.org/gifsicle/">gifsicle</a>. If you're on OS X and have <a href="http://mxcl.github.com/homebrew/">Homebrew</a> set up, all you have to do is run:</p>
+
+<blockquote>
+brew install ffmpeg imagemagick gifsicle
+</blockquote>
+
+<p>Boom. So the first thing you'll need is a video file. They're getting quite rare these days since everything's streaming now, but assuming you've got one, you'll wanna find the start time of the moment you wanna capture, and how long the moment is.</p>
+
+<p>Once you've know those two things, you'll wanna fire up <code>ffmpeg</code> to extract the moment from the video into a series of gif images. For example, if I wanted 5 seconds from <code>myvideo.avi</code>, starting at 9 minutes and 52 seconds in, I'd run:</p>
+
+<blockquote>
+ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif
+</blockquote>
+
+<p>This will output a series of <code>myanim-001.gif, myanim-002.gif</code>, etc images to the current directory, with one image per frame in the video.</p>
+
+<p>From here, you could just compile these images into an animated gif with <code>gifsicle</code>:</p>
+
+<blockquote>
+gifsicle --delay=4 --loop myanim-*.gif > myanim.gif
+</blockquote>
+
+<p>That will create an animated gif <code>myanim.gif</code> from all of the frames that ffmpeg extract with a delay of 4 hundreths of a second between each frame, looped forever. You can view it in a browser like Chrome this:</p>
+
+<blockquote>
+open -a /Applications/Google\ Chrome.app myanim.gif
+</blockquote>
+
+<p>Most of the time though, this will generate an image file that's way to large for you to post or others to view in a timely manner, so you'll wanna crop and scale down the image using ImageMagick, specifically ImageMagick's <code>mogrify</code> tool.</p>
+
+<blockquote>
+  mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif
+</blockquote>
+
+<p>This will crop the images to 1024 by 1024 with a horizontal offset of 200 pixels, remove the cropped portion from the image, then resize it proportionally to 480 by 480. Now you can rerun the <code>gifsicle</code> command and you'll have a nice and svelte animated gif file on your hands!</p>
+
+<p>Note that <code>gifsicle</code> has some options to crop and scale the animation, but I found that it doesn't preserve the quality of the images as well as <code>mogrify</code> does. Also be careful with <code>mogrify</code> because it modifies the image files you point it at, so you may want to make a copy of the first frame and test your mogrify command on it before applying the command to all the frames. Though if you mess up, you can always run <code>ffmpeg</code> again.</p>
+
+<p>Enjoy!</p>
+
+<p><img src="http://media.tumblr.com/4962cbe71edd812d8df1093672870888/tumblr_inline_miqgu6Dwiw1qz4rgp.gif" /></p>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="http://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="http://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2017 Carlo Cabanilla
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+
+  </body>
+
+</html>

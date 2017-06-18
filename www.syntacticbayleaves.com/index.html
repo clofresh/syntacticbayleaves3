@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="http://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000009">
+    <h2>
+      <a name="post-00000009" class="permalink icon-bookmark" href="00000009.html">&nbsp;</a>
+      <span class="title">Encrypt your local AWS credentials with aws-vault</span>
+      <small class="date">Sun, Jun 04, 2017</small>
+    </h2>
+    <div class="body">
+    <p>I want to start blogging again, so that means figuring out how my static site generator works again. Turns out its ruby dependencies have rotted, so I'm just gonna copy-paste the html to publish stuff.</p>
+<p>Next step: redownload the content from s3. Since I wiped my laptop since I last published, I don't have the original AWS keys I used to post, so I took the opportunity to Do The Right Thing and immediately put my new AWS keys in aws-vault encrypted files.</p>
+<p>Normally to use AWS APIs from a workstation command line, you need to pass AWS credentials either via a plaintext config file, or in environment variables, presumably from sourced from a plaintext bashrc file or similar. This leaves your credentials vulnerable if some malware manages to get on your machine and looks for AWS credentials, or if you laptop gets stolen and your hard drive isn't encrypted, or is encrypted but you've already logged in before its been stolen.</p>
+<p>You could probably encrypt your AWS credentials file with GPG and have some wrapper script to decrypt it when you're trying to use the AWS command line tools, but aws-vault makes this much more conventient for you. How it works:</p>
+<ol>
+  <li>Download <a href="https://github.com/99designs/aws-vault/releases">aws-vault</a> and put it in your PATH. Since it's a Go app, it's a single self-contained binary which is convenient. If you're running Arch Linux, it's also in the <a href="https://aur.archlinux.org/packages/aws-vault">AUR</a></li>
+  <li>To add your credentials: <br />
+    <blockquote>
+$ aws-vault add my-profile<br />
+Enter Access Key ID:<br />
+Enter Secret Access Key:<br />
+Enter passphrase to unlock /home/carlo/.awsvault/keys:
+    </blockquote>
+  The passphrase is the encryption key to encrypt and decrypt those credentials, so don't leave it blank.
+  </li>
+  <li>To use the credentials: <br />
+    <blockquote>
+$ aws-vault exec personal ./my-script-that-needs-aws-creds<br />
+Enter passphrase to unlock /home/carlo/.awsvault/keys:
+    </blockquote>
+  </li>
+</ol>
+<p>Now, your credentials aren't in plaintext at rest. For some extra protection, you can add these parameters:</p>
+<ul>
+  <li><strong>--session-ttl</strong> - Defaults to 4h but for increased security, you can reduce that time. Conversely, if you get tired of recreating your <code>aws-vault</code> session, you can increase the time, though it increases the amount of time a bad guy has to use your creds if your machine gets stolen.</li>
+  <li><strong>--mfa-token</strong> - If you have <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html">multi-factor auth</a> enabled on your IAM account, you can pass those tokens into <code>aws-vault</code></li>
+</ul>
+    </div>
+  </article>
+  <article id="post-00000008">
+    <h2>
+      <a name="post-00000008" class="permalink icon-bookmark" href="00000008.html">&nbsp;</a>
+      <span class="title">Making animated gifs from command line</span>
+      <small class="date">Tue, Feb 26, 2013</small>
+    </h2>
+    <div class="body">
+    <p><img src="http://media.tumblr.com/e25cefe03c15ac186ef40869cb5f2ade/tumblr_inline_mipkz3mxjb1qz4rgp.gif"/></p>
+
+<p>Sometimes when you're watching your favorite show, a perfect moment comes along that you just gotta capture and share with everyone. That's where the animated gif comes in. Though they're really popular with the kids these days, they're surprisingly hard to make. Luckily there's some powerful open source command line tools that can help you: <a href="http://www.ffmpeg.org/">ffmpeg</a>, <a href="http://www.imagemagick.org/">ImageMagick</a> and <a href="http://www.lcdf.org/gifsicle/">gifsicle</a>. If you're on OS X and have <a href="http://mxcl.github.com/homebrew/">Homebrew</a> set up, all you have to do is run:</p>
+
+<blockquote>
+brew install ffmpeg imagemagick gifsicle
+</blockquote>
+
+<p>Boom. So the first thing you'll need is a video file. They're getting quite rare these days since everything's streaming now, but assuming you've got one, you'll wanna find the start time of the moment you wanna capture, and how long the moment is.</p>
+
+<p>Once you've know those two things, you'll wanna fire up <code>ffmpeg</code> to extract the moment from the video into a series of gif images. For example, if I wanted 5 seconds from <code>myvideo.avi</code>, starting at 9 minutes and 52 seconds in, I'd run:</p>
+
+<blockquote>
+ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif
+</blockquote>
+
+<p>This will output a series of <code>myanim-001.gif, myanim-002.gif</code>, etc images to the current directory, with one image per frame in the video.</p>
+
+<p>From here, you could just compile these images into an animated gif with <code>gifsicle</code>:</p>
+
+<blockquote>
+gifsicle --delay=4 --loop myanim-*.gif > myanim.gif
+</blockquote>
+
+<p>That will create an animated gif <code>myanim.gif</code> from all of the frames that ffmpeg extract with a delay of 4 hundreths of a second between each frame, looped forever. You can view it in a browser like Chrome this:</p>
+
+<blockquote>
+open -a /Applications/Google\ Chrome.app myanim.gif
+</blockquote>
+
+<p>Most of the time though, this will generate an image file that's way to large for you to post or others to view in a timely manner, so you'll wanna crop and scale down the image using ImageMagick, specifically ImageMagick's <code>mogrify</code> tool.</p>
+
+<blockquote>
+  mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif
+</blockquote>
+
+<p>This will crop the images to 1024 by 1024 with a horizontal offset of 200 pixels, remove the cropped portion from the image, then resize it proportionally to 480 by 480. Now you can rerun the <code>gifsicle</code> command and you'll have a nice and svelte animated gif file on your hands!</p>
+
+<p>Note that <code>gifsicle</code> has some options to crop and scale the animation, but I found that it doesn't preserve the quality of the images as well as <code>mogrify</code> does. Also be careful with <code>mogrify</code> because it modifies the image files you point it at, so you may want to make a copy of the first frame and test your mogrify command on it before applying the command to all the frames. Though if you mess up, you can always run <code>ffmpeg</code> again.</p>
+
+<p>Enjoy!</p>
+
+<p><img src="http://media.tumblr.com/4962cbe71edd812d8df1093672870888/tumblr_inline_miqgu6Dwiw1qz4rgp.gif" /></p>
+    </div>
+  </article>
+  <article id="post-00000007">
+    <h2>
+      <a name="post-00000007" class="permalink icon-bookmark" href="00000007.html">&nbsp;</a>
+      <span class="title">Gangnam, Fox News style</span>
+      <small class="date">Sat, Dec 01, 2012</small>
+    </h2>
+    <div class="body">
+    <iframe width="480" height="360" src="http://www.youtube.com/embed/DuFOywDxDcc?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<p>I saw a funny/racist clip of Bill O'Reilly "analyzing" PSY's Gangnam Style video to try to figure out why it's so popular. The pundit he had on said that it was just a mindless pop song with a good beat and it was meaningless and that's what people are looking for these days.</p>
+
+<p>At best, this is extremely lazy, as they didn't even translate the words from Korean. At worst, it's just plain racist, implying that because it's in a language they don't understand, it's meaningless.</p>
+
+<p>In most cases they would have been right: pop songs are mostly meaningless. However, this pop song actually did have a meaning: it was parodying Korean superficiality, where poser kids claim to be from the uber-rich Gangnam district, the Beverly Hills of Seoul. They could have picked that up from a quick scan of Gangnam Style's wikipedia page.</p>
+
+<p>I didn't think much of the O'Reilly clip because, well it's Fox News. Getting mad at Fox News is pretty much just pissing in the wind. Mostly forgetting about it, I went on my merry way to get a long-overdue haircut in Chinatown.</p>
+
+<p>I was chatting with the woman washing my hair, a middle-aged woman a few years younger than my mom. She asked if I worked or studied and when I said I worked she asked, "Oh, do you get two days off?"</p>
+
+<p>I was thinking she was asking about Christmas break until she followed up with "like Saturday and Sunday?"</p>
+
+<p>I prodded a bit, asking, "When do you have off?"</p>
+
+<p>"Oh Tuesdays."</p>
+
+<p>I was a bit taken aback, laying face up with my hair lathered up, feeling like an asshole because I get to not work for two days of the week and still be able to subsist.</p>
+
+<p>This woman washing my hair for  tips works 6 days a week, while we all take for granted our God-given right to a weekend.  I didn't get a chance to ask if she had kids, but I knew the story well enough.</p>
+
+<p>It was my parents story, both of them working 7 days a week to feed their 3 kids and aging parents with their local real estate business that served the immigrant community that the big real estate companies had no patience for.</p>
+
+<p>My dad had the business phone line forwarded to our home phone during off hours so they were literally working the whole day. I grew up in fear of answering the phone because an angry client shouted at me the one time I did. I hated their business. They were always b busy working, and I was always the last to get picked up from school. As an adult though, I look back and thank God for my parents' diligence, paying my college tuition in motherfuckin' cash and giving me such a great position in life.</p>
+
+<p>It's also the story of the Filipino lady who served me fried chicken at my college's local munchies spot, the one that got robbed every other month. She lived in Baltimore with her shut-in mother, supporting both of them with her fast food salary, as well as paying for her children in the Philippines to go to nursing school. Before I graduated, she had gotten a new job with my college's food services staff, a big step up. She had also met a nice man, an American citizen, who agreed to marry her so that the byzantine immigration laws would let her bring the rest of her family here. She asked me to be her best man(???) but I politely declined.</p>
+
+<p>What does this have to do with Bill O'Reilly, you might ask? Well, these business-minded family-oriented Asian folks are exactly the kind of people who would vote Republican if the Republican party would even acknowledge their existence.</p>
+
+<p>We start small businesses, creating jobs despite not benefiting from the "job creator" tax cuts. We don't rely on state assistance when we're old or sick or down on our luck because we have a strong family-oriented culture that has us take care of each other when we're in trouble. We do whatever it takes to excel in the broken school system so we don't have to go through the same economic hardships our parents went through. But Asians don't exist on the political radar, so it's ok to blatantly discrimint against.</p>
+
+<p>Fuck that, I'm so tired of that shit.</p>
+    </div>
+  </article>
+  <article id="post-00000006">
+    <h2>
+      <a name="post-00000006" class="permalink icon-bookmark" href="00000006.html">&nbsp;</a>
+      <span class="title">Adventure game prototype 2 - A* pathfinding</span>
+      <small class="date">Sun, Oct 14, 2012</small>
+    </h2>
+    <div class="body">
+    <p>I wanted to add an easy way to script a scene with various sprites doing different movements and animations at different times, but my current implementation of sprites was too tied to actions triggered from player input. Additionally, I was trying to use physics collision boxes for obstructions and have the NPC sprites avoid them, but they only knew the obstructions existed when they actually bumped into them.</p>
+
+<p>Luckily, I just so happened to be taking an <a href="https://www.edx.org/courses/BerkeleyX/CS188.1x/2012_Fall/about">AI class</a> through BerkeleyX, where the first lesson was on search algorithms. Once we started learning about how to get Pacman through a maze in the most efficient way possible, I knew it was just what I was looking for. I learned that if you represent your problem as a start state, a goal state, a series of actions that can transition between states, and a domain of states your guy could be in, you can solve your search problem in a very general way, the best being the <a href="http://en.wikipedia.org/wiki/A*_search_algorithm">A* search algorithm</a>. Intuitively, A* search means trying the next cheapest possible state, where cheap is defined as the total cost of all the actions to get to that state plus an estimated cost of getting to the goal once you're at that state.</p>
+
+<p>After reading a rant about <a href="http://www.ai-blog.net/archives/000152.html">game pathfinding</a>, I decided to represent my search states as vertices of navigable rectangles, or navmesh, on my tile map, and actions as displacement vectors. My sprites would be able to take a list of displacement vectors and queue up a bunch of actions that will move the sprites along those displacement vectors at a given velocity. This is a sample of a sprite moving to a northern area, a western area, and eastern area and back to the northern area:</p>
+
+<iframe width="480" height="360" src="http://www.youtube.com/embed/e_OrsJDrkrY?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<p>Moving the sprite in black from one area to another requires a new search, and once the sprite finishes the actions from that search, it executes another search to get to the next area. Notice that she tries to avoid trees and walks along the edge of the path. What's nice is that I can define the navigable areas, as well as possible goal areas in my Tiled map editor.</p>
+
+<p class="muted"><img src="img/00000006-navmesh.jpg" /><br />
+  Tilemap with navmesh overlay
+</p>
+
+<p>Next, I might either continue on with the exposition side of things and add dialogue and transitioning between scenes, or maybe add some fighting again.</p>
+    </div>
+  </article>
+  <article id="post-00000005">
+    <h2>
+      <a name="post-00000005" class="permalink icon-bookmark" href="00000005.html">&nbsp;</a>
+      <span class="title">Adventure game prototype 1 - new art, better editor integration</span>
+      <small class="date">Fri, Sep 28, 2012</small>
+    </h2>
+    <div class="body">
+    <p>I updated the art I was using with free-er as in speech art from the <a href="http://lpc.opengameart.org/">Liberated Pixel Cup</a>. The grass, trees and bee are all from the very excellent <a href="http://lpc.opengameart.org/static/lpc-style-guide/assets.html">base assests</a> they provide, and the player sprite is from <a href="http://opengameart.org/content/steampun-a-fy-with-concept-art">Emilio J. Sanchez-Sierra's entry</a>. Here's what it looks like now:</p>
+
+<iframe width="640" height="480" src="http://www.youtube.com/embed/D9DcTqnf8wg?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<p>A lot of the LPC assests are in .xcf, so I had to install <a href="http://www.gimp.org/">GIMP</a> to work with them. Luckily, the OS X version can run mostly natively and doesn't need X11 anymore (though it still uses GTK-style dialogues! &lt;/nitpick&gt;). The LPC assets let you mix and match hair, facial features and clothing by just switching up the layers, which is pretty freakin awesome, though I'm having a little trouble with basic operations with GIMP, arg.</p>
+
+<p>I also updated the code to pull more data about the dynamic sprites from the .tmx map file in addition to the background tiles. Since the <a href="http://www.mapeditor.org/">Tiled</a> is such a great free standards-based .tmx map editor, having my game engine read object data from .tmx files will let me focus on map design instead of technical details. It would also let me collaborate on maps with people who may not know how to code, which is helpful.</p>
+
+<p>There's still some work to be done to fix my collision handling code, it makes my character warp around when colliding with a tree. I also need to get the melee attacks going, probably going to have placeholder animations for individual attacks since the sprites aren't meant for fighting games. I'd also like to have a scriptable camera so that I can do interesting things with it, like panning and zooming across the scenery instead of always focusing on the player.</p>
+    </div>
+  </article>
+  <article id="post-00000004">
+    <h2>
+      <a name="post-00000004" class="permalink icon-bookmark" href="00000004.html">&nbsp;</a>
+      <span class="title">Adventure game prototype</span>
+      <small class="date">Fri, Sep 21, 2012</small>
+    </h2>
+    <div class="body">
+    <p>Somewhere along the way, I came up with a desire to do a 2D adventure game. I wanted it to be a top down game similar to the SNES Legend of Zelda, but with a Tekken-style combat system. I wrote up a a bunch of backstory and the initial quests which I'll share later, but I needed to verify that mashing Zelda with Tekken would make for a fun game, or if it were even possible.</p>
+
+<p>So I whipped up a prototype using the <a href="https://love2d.org">Lua Löve</a> framework, tiles from Mozilla's HTML5 tech demo/lovefest, <a href="http://browserquest.mozilla.org/">BrowserQuest</a> that I found on <a href="http://opengameart.org/content/browserquest-sprites-and-tiles">Open Game Art</a>, and some <a href="http://www.youtube.com/watch?v=gwU_NupaT-s&amp;feature=related">River City Ransom</a> sprites that I had lying around. Check it out:</p>
+
+<iframe width="640" height="480" src="http://www.youtube.com/embed/YE89_vCIkKg?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<p>I took Tekken's rock-scissor-paper style attacking/blocking/dodging scheme where high attacks were blockable blocking high and dodgable crouching low, mid attacks were blockable blocking high, but hit when blocking low, and low attacks were blockable blocking low but hit when blocking high. This leads to interesting guessing games where two attacks might have similar starting animations but one hits mid and the other hits low. I wanted combat in my game to be challenging, even against non-boss enemies, so you felt accomplished when you beat them.</p>
+
+<p>I'll need to figure out what actual attacks will be available for the player and for the first few enemies and do my own art for it instead of ripping River City Ransom. Also gotta implement mundane things like getting obstructed by objects in the background, losing health and dying, tracking and improving player stats, etc.</p>
+
+<p>I'll keep you posted.</p>
+    </div>
+  </article>
+  <article id="post-00000003">
+    <h2>
+      <a name="post-00000003" class="permalink icon-bookmark" href="00000003.html">&nbsp;</a>
+      <span class="title">Cleaning up that mess of wires</span>
+      <small class="date">Wed, Mar 28, 2012</small>
+    </h2>
+    <div class="body">
+    <p>The other day I tripped on one of the wires I have jutting out from the back of my media center and got fed up with the whole mess back there. My media center consists of a tv with rabbit ears, an Xbox 360 with Kinect and controller charging dock, an old Xbox (modded with XBMC) an Apple TV 2 (also modded with XBMC), a QNAP home server (for serving content to XBMC), a cable modem, a router and a subwoofer, and they all have wires wires wires all over the place. I need two power strips just to keep them all plugged in, not to mention two large power bricks, five power adaptors and 4 ethernet cords. That adds up to a ton of wires.</p>
+
+<p>I tweeted a picture of my mess of wires asking, half-jokingly, if there's some startup dedicated to fixing the mess of wires behind people's media centers.</p>
+
+<p><img src="img/00000003-mess-of-wires.jpg" title="Mess of wires behind my media center" /></p>
+
+<p>Luckily my good friend and colleague <a href="https://twitter.com/#!/jongala">@jongala</a> pointed me to a company called <a href="http://www.bluelounge.com/">Bluelounge</a> and their <a href="http://www.bluelounge.com/products/cablebox/">CableBox</a> product. It's basically a rectangular box with a removable top that's big enough to put your power strips and adapters into, with two vertical slits to let out the wires. It seemed so simple, and I felt like a jerkface for paying 9.95 for a box when there are desperate children in the Philippines whose cables will remain tangled forever, but what the hell, I bought it anyway. And let me tell you, it worked great! Here's a before and after picture:</p>
+
+<p><img src="img/00000003-bluelounge-before-after.jpg" title="Before and after Bluelounge's CableBox" /></p>
+
+<p>I couldn't be happier with my CableBox. Less cluster in my life = huge win.</p>
+    </div>
+  </article>
+  <article id="post-00000002">
+    <h2>
+      <a name="post-00000002" class="permalink icon-bookmark" href="00000002.html">&nbsp;</a>
+      <span class="title">Switching from OS X to Linux Mint 12</span>
+      <small class="date">Sun, Feb 19, 2012</small>
+    </h2>
+    <div class="body">
+    <div class="cover"><a href="img/00000002-desktop.png"><img src="img/00000002-desktop.png" /></a></div>
+
+<p>I've been an OS X user since Tiger's launch in 2005. I got a G4 Powerbook as a graduation present from my parents, and I loved how coherent an operating system it was. The biggest win for me was that it was unix-y enough to be a nice programming environment (Aquaemacs ftw) while at the same time having nice apps for normal day life things like Quicksilver, iTunes, iPhoto and Adium.  I was coming from the frankenstein user experience of Windows XP + Cygwin environment, so OS X was a breathe of fresh air. I messed a bit with Gnome desktop on Fedora Core 3, but either I was still too much of a Linux n00b, or it still sucked too much to be useful (hello recompiling the kernel on video driver updates).</p>
+
+<p>Fast forward to 2012, where my workstation is an iMac running OS X Snow Leopard, my music player of choice is Spotify, my editor is Sublime Text 2 and I spend a large portion of my time in iTerm2 in fullscreen mode with 3 or 4 terminal tabs split into 6 panes each. I refuse to upgrade to Lion because I hate the one-app-per-virtual-desktop-but-never-quite-knowing-the-order-of-the-desktops paradigm. The scrolling/scrollbars, and Mail.app are nicer, but not worth losing out on the virtual desktop issue. Also, the App Store can go to hell and die.</p>
+
+<p>When Apple announced Mountain Lion, I could see that they were pushing for more iPadification and not much else to get excited about, so on a whim, I decided to give Linux desktop another shot. Apparently <a href="http://linuxmint.com/">Linux Mint</a> became the hot new distro in town when Ubuntu pushed out the much-maligned Unity desktop onto everyone, so I torrented the Linux Mint 12 "Lisa" iso, partitioned off a 20GB piece of my hard drive and gave it a go.</p>
+
+<p>The install was pretty painless. It discovered the partition right away and started installing in the background while the wizard asked me the usual install questions, which I thought was a nice touch. It installed GRUB on my Windows partition, which threw me off for a bit, but nothing a little Googling couldn't unearth.</p>
+
+<p> But yeah, everything installed fine, and after a <a href="http://community.linuxmint.com/software/view/software-center">Software Center</a> package upgrade, I was running the latest and greatest Gnome 3 desktop. The things that you normally feared would fail on Linux worked fine: sound, video, wifi, builtin volume/brightness buttons, suspend, Flash, they all worked without any intervention on my part. Had to enable two-finger scrolling in the settings pane, but that's about it. I proceeded to get the same apps that I had worked with on OS X: Chrome, <a href="http://www.spotify.com/us/blog/archives/2010/07/12/linux/">Spotify</a> (sadly, doesn't have Spotify Apps yet), Sublime Text 2 (boo, no apt repo!), Dropbox. There's no shortage of terminals on Linux but I settled with <a href="http://community.linuxmint.com/software/view/terminator">Terminator</a> for the split panes (not quite ready for <a href="http://xmonad.org/">Xmonad</a>). I couldn't find a particularly nice Twitter client, which is surprisingly coming from OS X/iOS land where there's dozens of clients that was decent. I ended up settling on <a href="http://community.linuxmint.com/software/view/gwibber">Gwibber</a>, even though it had a comically low score of -81 in Software Center.
+</p>
+
+<p>Also, can I just say, apt-get for the muthaf'ing win? Apt-get is great not just for getting all your development dependencies with zero fuss (homebrew on OS X is mostly good enough for that), but for all your system updates. Instead of getting annoying updater popups from Apple that require a system reboot, or every single app trying to do their own updates when opening the app, or the App Store where you need to explicitly go out of your way to discover if there are new updates and install them yourself. That is one paradigm that Apple definitely should not have copied from iOS. Nope, apt-get just goes and does its thing. You might get a notification from Software Center to run your updates, which is just a wrapper around apt-get, but for the most part you could probably just cron an <code>apt-get upgrade &amp;&amp; apt-get update</code> every week and you'll be fine.</p>
+
+<p>Gnome Shell is a pretty nice desktop environment. I like that they've created a (Mission Control + Quicksilver)-like view when you press the super key. They've managed to show all your open windows on the current workspace, plus a high level preview of all your workspaces, plus a search-as-you-type app search without it being a visual overload. I like it much more than OS X's Mission Control, though I do miss being able to search for songs from Quicksilver. I'm sure there's a shell extension that can do that, just haven't found it.</p>
+
+<p>Speaking of shell extensions, I love that I can install or disable extensions right from the <a href="https://extensions.gnome.org/">extensions website</a>. My favorite extension so far is <a href="https://extensions.gnome.org/extension/28/gtile/">gTile</a>, a nice way to resize your windows into fixed grid sizes (again, not ready for Xmonad). Apparently shell extensions are still bleeding edge, as there aren't great documentation on them. There's <a href="http://live.gnome.org/GnomeShell/Extensions">a brief intro</a> on the Gnome wiki, but it doesn't try to help you with the GUI API, just on setup. It's nice that the extensions are Javascript and CSS, but the GUI API just looks like a thin wrapper around the <a href="http://www.clutter-project.org/">Clutter</a> API, which is C++, and doesn't look any prettier in Javascript. Still, it's a start. I'd like to create a nice Twitter shell extension at some point.</p>
+
+<p>So, this is day 4 of me switching from OS X to Linux Mint 12, and I am loving it. My next steps are to figure out a nice cross-platform notetaking replacement for Evernote, which I'm leaning towards plain Markdown files + Dropbox, and to set up my Datadog dev environment, which should be a cinch since our prod environment also uses apt-get. Maybe also trying out a native email client, though the Gmail web app plus a shell extension for email notifications are working out fine.</p>
+
+<p>Hooray for the Linux community!</p>
+
+<h4>Thumbnails</h4>
+<ul class="thumbnails">
+  <li class="span2"><a href="img/00000002-desktop.png"><img src="img/00000002-desktop.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gwibber-software-center.png"><img src="img/00000002-gwibber-software-center.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gnome-shell.png"><img src="img/00000002-gnome-shell.png" /></a></li>
+  <li class="span2"><a href="img/00000002-gtile.png"><img src="img/00000002-gtile.png" /></a></li>
+</ul>
+    </div>
+  </article>
+  <article id="post-00000001">
+    <h2>
+      <a name="post-00000001" class="permalink icon-bookmark" href="00000001.html">&nbsp;</a>
+      <span class="title">Hello world 3</span>
+      <small class="date">Sat, Feb 18, 2012</small>
+    </h2>
+    <div class="body">
+    <p>Well here we are again, with me trying another blogging engine. This time,
+I'm moving away from a database-backed blog to a more simple static site. Gotta
+figure how how to make it easy to post to. Maybe this will encourage me to write
+longer form posts, instead of knee-jerk links.</p>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="http://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="http://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2017 Carlo Cabanilla
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="http://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000004">
+    <h2>
+      <a name="post-00000004" class="permalink icon-bookmark" href="00000004.html">&nbsp;</a>
+      <span class="title">Adventure game prototype</span>
+      <small class="date">Fri, Sep 21, 2012</small>
+    </h2>
+    <div class="body">
+    <p>Somewhere along the way, I came up with a desire to do a 2D adventure game. I wanted it to be a top down game similar to the SNES Legend of Zelda, but with a Tekken-style combat system. I wrote up a a bunch of backstory and the initial quests which I'll share later, but I needed to verify that mashing Zelda with Tekken would make for a fun game, or if it were even possible.</p>
+
+<p>So I whipped up a prototype using the <a href="https://love2d.org">Lua Löve</a> framework, tiles from Mozilla's HTML5 tech demo/lovefest, <a href="http://browserquest.mozilla.org/">BrowserQuest</a> that I found on <a href="http://opengameart.org/content/browserquest-sprites-and-tiles">Open Game Art</a>, and some <a href="http://www.youtube.com/watch?v=gwU_NupaT-s&amp;feature=related">River City Ransom</a> sprites that I had lying around. Check it out:</p>
+
+<iframe width="640" height="480" src="http://www.youtube.com/embed/YE89_vCIkKg?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<p>I took Tekken's rock-scissor-paper style attacking/blocking/dodging scheme where high attacks were blockable blocking high and dodgable crouching low, mid attacks were blockable blocking high, but hit when blocking low, and low attacks were blockable blocking low but hit when blocking high. This leads to interesting guessing games where two attacks might have similar starting animations but one hits mid and the other hits low. I wanted combat in my game to be challenging, even against non-boss enemies, so you felt accomplished when you beat them.</p>
+
+<p>I'll need to figure out what actual attacks will be available for the player and for the first few enemies and do my own art for it instead of ripping River City Ransom. Also gotta implement mundane things like getting obstructed by objects in the background, losing health and dying, tracking and improving player stats, etc.</p>
+
+<p>I'll keep you posted.</p>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="http://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="http://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2017 Carlo Cabanilla
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+
+  </body>
+
+</html>

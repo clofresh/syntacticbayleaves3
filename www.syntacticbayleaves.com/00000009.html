@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="http://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000009">
+    <h2>
+      <a name="post-00000009" class="permalink icon-bookmark" href="00000009.html">&nbsp;</a>
+      <span class="title">Encrypt your local AWS credentials with aws-vault</span>
+      <small class="date">Sun, Jun 04, 2017</small>
+    </h2>
+    <div class="body">
+    <p>I want to start blogging again, so that means figuring out how my static site generator works again. Turns out its ruby dependencies have rotted, so I'm just gonna copy-paste the html to publish stuff.</p>
+<p>Next step: redownload the content from s3. Since I wiped my laptop since I last published, I don't have the original AWS keys I used to post, so I took the opportunity to Do The Right Thing and immediately put my new AWS keys in aws-vault encrypted files.</p>
+<p>Normally to use AWS APIs from a workstation command line, you need to pass AWS credentials either via a plaintext config file, or in environment variables, presumably from sourced from a plaintext bashrc file or similar. This leaves your credentials vulnerable if some malware manages to get on your machine and looks for AWS credentials, or if you laptop gets stolen and your hard drive isn't encrypted, or is encrypted but you've already logged in before its been stolen.</p>
+<p>You could probably encrypt your AWS credentials file with GPG and have some wrapper script to decrypt it when you're trying to use the AWS command line tools, but aws-vault makes this much more conventient for you. How it works:</p>
+<ol>
+  <li>Download <a href="https://github.com/99designs/aws-vault/releases">aws-vault</a> and put it in your PATH. Since it's a Go app, it's a single self-contained binary which is convenient. If you're running Arch Linux, it's also in the <a href="https://aur.archlinux.org/packages/aws-vault">AUR</a></li>
+  <li>To add your credentials: <br />
+    <blockquote>
+$ aws-vault add my-profile<br />
+Enter Access Key ID:<br />
+Enter Secret Access Key:<br />
+Enter passphrase to unlock /home/carlo/.awsvault/keys:
+    </blockquote>
+  The passphrase is the encryption key to encrypt and decrypt those credentials, so don't leave it blank.
+  </li>
+  <li>To use the credentials: <br />
+    <blockquote>
+$ aws-vault exec personal ./my-script-that-needs-aws-creds<br />
+Enter passphrase to unlock /home/carlo/.awsvault/keys:
+    </blockquote>
+  </li>
+</ol>
+<p>Now, your credentials aren't in plaintext at rest. For some extra protection, you can add these parameters:</p>
+<ul>
+  <li><strong>--session-ttl</strong> - Defaults to 4h but for increased security, you can reduce that time. Conversely, if you get tired of recreating your <code>aws-vault</code> session, you can increase the time, though it increases the amount of time a bad guy has to use your creds if your machine gets stolen.</li>
+  <li><strong>--mfa-token</strong> - If you have <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html">multi-factor auth</a> enabled on your IAM account, you can pass those tokens into <code>aws-vault</code></li>
+</ul>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="http://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="http://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2017 Carlo Cabanilla
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+
+  </body>
+
+</html>

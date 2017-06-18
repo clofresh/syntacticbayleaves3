@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Syntactic Bay Leaves</title>
+    <description>Pungent programming, and other topics of note</description>
+    <link>http://www.syntacticbayleaves.com/</link>
+    <lastBuildDate>${BLOG_BUILD_DATE}</lastBuildDate>
+    <pubDate>${BLOG_BUILD_DATE}</pubDate>
+    <ttl>60</ttl>

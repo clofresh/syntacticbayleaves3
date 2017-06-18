@@ -1,0 +1,15 @@
+  <url>
+    <loc>http://www.syntacticbayleaves.com/</loc>
+    <lastmod>${BLOG_INDEX_LAST_MOD}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>http://www.syntacticbayleaves.com/projects.html</loc>
+    <lastmod>2013-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
