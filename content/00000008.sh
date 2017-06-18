@@ -5,37 +5,27 @@ export BLOG_BODY=$(cat <<TEXT
 
 <p>Sometimes when you're watching your favorite show, a perfect moment comes along that you just gotta capture and share with everyone. That's where the animated gif comes in. Though they're really popular with the kids these days, they're surprisingly hard to make. Luckily there's some powerful open source command line tools that can help you: <a href="http://www.ffmpeg.org/">ffmpeg</a>, <a href="http://www.imagemagick.org/">ImageMagick</a> and <a href="http://www.lcdf.org/gifsicle/">gifsicle</a>. If you're on OS X and have <a href="http://mxcl.github.com/homebrew/">Homebrew</a> set up, all you have to do is run:</p>
 
-<blockquote>
-brew install ffmpeg imagemagick gifsicle
-</blockquote>
+<pre><code class="language-bash">brew install ffmpeg imagemagick gifsicle</code></pre>
 
 <p>Boom. So the first thing you'll need is a video file. They're getting quite rare these days since everything's streaming now, but assuming you've got one, you'll wanna find the start time of the moment you wanna capture, and how long the moment is.</p>
 
 <p>Once you've know those two things, you'll wanna fire up <code>ffmpeg</code> to extract the moment from the video into a series of gif images. For example, if I wanted 5 seconds from <code>myvideo.avi</code>, starting at 9 minutes and 52 seconds in, I'd run:</p>
 
-<blockquote>
-ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif
-</blockquote>
+<pre><code class="language-bash">ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif</code></pre>
 
 <p>This will output a series of <code>myanim-001.gif, myanim-002.gif</code>, etc images to the current directory, with one image per frame in the video.</p>
 
 <p>From here, you could just compile these images into an animated gif with <code>gifsicle</code>:</p>
 
-<blockquote>
-gifsicle --delay=4 --loop myanim-*.gif > myanim.gif
-</blockquote>
+<pre><code class="language-bash">gifsicle --delay=4 --loop myanim-*.gif > myanim.gif</code></pre>
 
 <p>That will create an animated gif <code>myanim.gif</code> from all of the frames that ffmpeg extract with a delay of 4 hundreths of a second between each frame, looped forever. You can view it in a browser like Chrome this:</p>
 
-<blockquote>
-open -a /Applications/Google\ Chrome.app myanim.gif
-</blockquote>
+<pre><code class="language-bash">open -a /Applications/Google\ Chrome.app myanim.gif</code></pre>
 
 <p>Most of the time though, this will generate an image file that's way to large for you to post or others to view in a timely manner, so you'll wanna crop and scale down the image using ImageMagick, specifically ImageMagick's <code>mogrify</code> tool.</p>
 
-<blockquote>
-  mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif
-</blockquote>
+<pre><code class="language-bash">mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif</code></pre>
 
 <p>This will crop the images to 1024 by 1024 with a horizontal offset of 200 pixels, remove the cropped portion from the image, then resize it proportionally to 480 by 480. Now you can rerun the <code>gifsicle</code> command and you'll have a nice and svelte animated gif file on your hands!</p>
 

@@ -1,26 +1,21 @@
-body * {
-  font-family: 'Balthazar', sans-serif;
-}
 body, p {
-  font-size: 18px;
+  font-family: 'Balthazar', sans-serif;
+  font-size: 20px;
 }
+code[class*="language-"],
+pre[class*="language-"],
 code, pre, blockquote {
   font-family: 'Inconsolata', monospace;
-  font-size: 75%;
-}
-
-code {
-  padding: 0px;
-  color: black;
-  background-color: transparent;
-  border: 0px;
+  font-size: 90%;
+  line-height: 1;
 }
 
 p {
-  line-height: 22px;
+  line-height: 26px;
   margin-bottom: 12px;
 }
 header h1 a {
+  font-family: 'Balthazar', sans-serif;
   color: black;
 }
 footer .license {

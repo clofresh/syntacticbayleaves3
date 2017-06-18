@@ -16,8 +16,9 @@
     <meta property="og:site_name" content="Syntactic Bay Leaves" />
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+    <link href="css/prism.css" rel="stylesheet" />
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
 
     <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
 
@@ -61,6 +62,107 @@
 
     <div class="row content">
       <section class="offset1 span8 posts">
+  <article id="post-00000010">
+    <h2>
+      <a name="post-00000010" class="permalink icon-bookmark" href="00000010.html">&nbsp;</a>
+      <span class="title">Making a simple AwesomeWM widget</span>
+      <small class="date">Sun, Jun 18, 2017</small>
+    </h2>
+    <div class="body">
+    <p>It's been a long time since I <a href="00000002.html">switched to Linux</a>,
+but I've been running Arch Linux instead of Mint for a few years now. My current
+workstation is a <a href="https://www.dell.com/developers">Dell XPS 13</a>,
+which is a really lightweight, pleasantly designed device whose hardware is all
+well-supported on Linux.</p>
+
+<p>The main weak point is its integrated graphics card, which I found couldn't
+drive an external 1080p monitor on its own without stuttering. I bought the
+<a href="https://www.amazon.com/gp/product/B06XN6XWD7/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=sbl24601-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=B06XN6XWD7&linkId=087842c220a58a8edfab34d274cc8a43">Dell TB16 Dock</a>
+to drive the monitor, which fixed the problem nicely with <a href="https://wiki.archlinux.org/index.php/Dell_XPS_15_(9550)#Thunderbolt_3_Docks">minimal fuss</a>.
+Now I can use an external monitor like a normal person!</p>
+
+<p>But! The fans are always on high when I'm plugged into the dock and using the external monitor.
+I got concerned about the cpu temperature, so started monitoring it with a
+simple watch command:</p>
+
+<pre><code class="language-bash">$ watch -n 1 sensors
+Every 1.0s: sensors                       xps13-arch: Sun Jun 18 14:47:16 2017
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +53.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 0:        +52.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 1:        +52.0°C  (high = +100.0°C, crit = +100.0°C)
+
+acpitz-virtual-0
+Adapter: Virtual device
+temp1:        +25.0°C  (crit = +107.0°C)
+temp2:        +27.8°C  (crit = +105.0°C)
+temp3:        +29.8°C  (crit = +105.0°C)
+
+iwlwifi-virtual-0
+Adapter: Virtual device
+temp1:        +37.0°C
+
+pch_skylake-virtual-0
+Adapter: Virtual device
+temp1:        +49.5°C
+</code></pre>
+
+<p>I thought it would be cool to see temperature in a more minimal way on my
+taskbar. Since I used <a href="https://awesomewm.org/">Awesome</a> as my window
+manager, I have pretty fine-grained control over the UI, so instead of installing
+a standalone app just for the temperature, I decided to learn a little bit about
+Awesome's text widget api so I can translate my command line call into data that
+drives a text widget. This is what I came up with:</p>
+
+<pre><code class="language-lua">-- Instantiate a new textbox widget
+local tempwidget = wibox.widget.textbox()
+
+-- The shell command to run. In this case, we call sensors in a for loop,
+-- sleeping 5s in between each call. We pass -u to sensors to get raw
+-- unformatted data from it, and coretemp-isa-0000 tells it to get just
+-- my cpu's temperature. We pipe that output into awk to get just the
+-- numeric value.
+local cmd = [[bash -c "
+while true; do
+    sensors -u coretemp-isa-0000 | awk '/temp1_input/ { print  }'
+    sleep 5
+done
+"]]
+
+-- The shell command is a blocking call but we don't want to block
+-- the rest of the UI waiting on it, so we use Awesome's
+-- awful.spawn.with_line_callback() to spawn a subprocess for the
+-- command and call our callback whenever there's new stdout data.
+-- Awesome handles this subprocess communication in a nonblocking
+-- way so the rest of the UI stays responsive.
+awful.spawn.with_line_callback(cmd, {
+    stdout = function(line)
+        -- This callback gets called whenever there's a new stdout line,
+        -- so in our command's case, every new temperature sample.
+        -- We do some simple string formatting on the value and update
+        -- the widget's value. Note that tempwidget is a closure on
+        -- the widget we instantiated earlier.
+        tempwidget:set_markup(string.format(' CPU: %.0f°C ', tonumber(line)))
+    end,
+    stderr = function(line)
+        -- Here we just post Awesome notifications if there's anything in stderr
+        -- in case the sensors command writes some errors to stderr.
+        naughty.notify({ text = "ERR:"..line})
+    end,
+})
+
+-- I'm omitting a lot of other layout code that probably already exists in your
+-- theme, but I'm assuming there's a layout for the right side of your taskbar
+right_layout:add(tempwidget)
+
+</code></pre>
+
+<p>This all feels nicely Linuxly. I didn't have to spin up a new app with
+complicated GUI dependencies just to get a simple value that I could
+already get from command line.</p>
+    </div>
+  </article>
   <article id="post-00000009">
     <h2>
       <a name="post-00000009" class="permalink icon-bookmark" href="00000009.html">&nbsp;</a>
@@ -73,27 +175,25 @@
 <p>Normally to use AWS APIs from a workstation command line, you need to pass AWS credentials either via a plaintext config file, or in environment variables, presumably from sourced from a plaintext bashrc file or similar. This leaves your credentials vulnerable if some malware manages to get on your machine and looks for AWS credentials, or if you laptop gets stolen and your hard drive isn't encrypted, or is encrypted but you've already logged in before its been stolen.</p>
 <p>You could probably encrypt your AWS credentials file with GPG and have some wrapper script to decrypt it when you're trying to use the AWS command line tools, but aws-vault makes this much more conventient for you. How it works:</p>
 <ol>
-  <li>Download <a href="https://github.com/99designs/aws-vault/releases">aws-vault</a> and put it in your PATH. Since it's a Go app, it's a single self-contained binary which is convenient. If you're running Arch Linux, it's also in the <a href="https://aur.archlinux.org/packages/aws-vault">AUR</a></li>
-  <li>To add your credentials: <br />
-    <blockquote>
-$ aws-vault add my-profile<br />
+  <li><p>Download <a href="https://github.com/99designs/aws-vault/releases">aws-vault</a> and put it in your PATH. Since it's a Go app, it's a single self-contained binary which is convenient. If you're running Arch Linux, it's also in the <a href="https://aur.archlinux.org/packages/aws-vault">AUR</a></p></li>
+  <li><p>To add your credentials:</p>
+<pre><code class="language-bash">$ aws-vault add my-profile<br />
 Enter Access Key ID:<br />
 Enter Secret Access Key:<br />
 Enter passphrase to unlock /home/carlo/.awsvault/keys:
-    </blockquote>
-  The passphrase is the encryption key to encrypt and decrypt those credentials, so don't leave it blank.
-  </li>
-  <li>To use the credentials: <br />
-    <blockquote>
-$ aws-vault exec personal ./my-script-that-needs-aws-creds<br />
+</code></pre>
+  <p>The passphrase is the encryption key to encrypt and decrypt those credentials, so don't leave it blank.
+  </p></li>
+  <li><p>To use the credentials: <br />
+<pre><code class="language-bash">$ aws-vault exec personal ./my-script-that-needs-aws-creds<br />
 Enter passphrase to unlock /home/carlo/.awsvault/keys:
-    </blockquote>
-  </li>
+</code></pre>
+  </p></li>
 </ol>
 <p>Now, your credentials aren't in plaintext at rest. For some extra protection, you can add these parameters:</p>
 <ul>
-  <li><strong>--session-ttl</strong> - Defaults to 4h but for increased security, you can reduce that time. Conversely, if you get tired of recreating your <code>aws-vault</code> session, you can increase the time, though it increases the amount of time a bad guy has to use your creds if your machine gets stolen.</li>
-  <li><strong>--mfa-token</strong> - If you have <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html">multi-factor auth</a> enabled on your IAM account, you can pass those tokens into <code>aws-vault</code></li>
+  <li><p><strong>--session-ttl</strong> - Defaults to 4h but for increased security, you can reduce that time. Conversely, if you get tired of recreating your <code>aws-vault</code> session, you can increase the time, though it increases the amount of time a bad guy has to use your creds if your machine gets stolen.</p></li>
+  <li><p><strong>--mfa-token</strong> - If you have <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html">multi-factor auth</a> enabled on your IAM account, you can pass those tokens into <code>aws-vault</code></p></li>
 </ul>
     </div>
   </article>
@@ -108,37 +208,27 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 
 <p>Sometimes when you're watching your favorite show, a perfect moment comes along that you just gotta capture and share with everyone. That's where the animated gif comes in. Though they're really popular with the kids these days, they're surprisingly hard to make. Luckily there's some powerful open source command line tools that can help you: <a href="http://www.ffmpeg.org/">ffmpeg</a>, <a href="http://www.imagemagick.org/">ImageMagick</a> and <a href="http://www.lcdf.org/gifsicle/">gifsicle</a>. If you're on OS X and have <a href="http://mxcl.github.com/homebrew/">Homebrew</a> set up, all you have to do is run:</p>
 
-<blockquote>
-brew install ffmpeg imagemagick gifsicle
-</blockquote>
+<pre><code class="language-bash">brew install ffmpeg imagemagick gifsicle</code></pre>
 
 <p>Boom. So the first thing you'll need is a video file. They're getting quite rare these days since everything's streaming now, but assuming you've got one, you'll wanna find the start time of the moment you wanna capture, and how long the moment is.</p>
 
 <p>Once you've know those two things, you'll wanna fire up <code>ffmpeg</code> to extract the moment from the video into a series of gif images. For example, if I wanted 5 seconds from <code>myvideo.avi</code>, starting at 9 minutes and 52 seconds in, I'd run:</p>
 
-<blockquote>
-ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif
-</blockquote>
+<pre><code class="language-bash">ffmpeg -ss 00:09:52 -t 5 -i /path/to/myvideo.avi myanim-%3d.gif</code></pre>
 
 <p>This will output a series of <code>myanim-001.gif, myanim-002.gif</code>, etc images to the current directory, with one image per frame in the video.</p>
 
 <p>From here, you could just compile these images into an animated gif with <code>gifsicle</code>:</p>
 
-<blockquote>
-gifsicle --delay=4 --loop myanim-*.gif > myanim.gif
-</blockquote>
+<pre><code class="language-bash">gifsicle --delay=4 --loop myanim-*.gif > myanim.gif</code></pre>
 
 <p>That will create an animated gif <code>myanim.gif</code> from all of the frames that ffmpeg extract with a delay of 4 hundreths of a second between each frame, looped forever. You can view it in a browser like Chrome this:</p>
 
-<blockquote>
-open -a /Applications/Google\ Chrome.app myanim.gif
-</blockquote>
+<pre><code class="language-bash">open -a /Applications/Google\ Chrome.app myanim.gif</code></pre>
 
 <p>Most of the time though, this will generate an image file that's way to large for you to post or others to view in a timely manner, so you'll wanna crop and scale down the image using ImageMagick, specifically ImageMagick's <code>mogrify</code> tool.</p>
 
-<blockquote>
-  mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif
-</blockquote>
+<pre><code class="language-bash">mogrify -crop 1024x1024+200+0 +repage -resize 480 myanim-*.gif</code></pre>
 
 <p>This will crop the images to 1024 by 1024 with a horizontal offset of 200 pixels, remove the cropped portion from the image, then resize it proportionally to 480 by 480. Now you can rerun the <code>gifsicle</code> command and you'll have a nice and svelte animated gif file on your hands!</p>
 
@@ -360,7 +450,7 @@ longer form posts, instead of knee-jerk links.</p>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/syntacticbayleaves.js"></script>
-
+    <script src="js/prism.js"></script>
   </body>
 
 </html>
