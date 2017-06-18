@@ -2,6 +2,7 @@
 BROWSER=/usr/bin/google-chrome-stable
 SHELL=/bin/bash
 DOMAIN=www.syntacticbayleaves.com
+AWS_PROFILE=personal
 
 # Templates
 TMP_DIR=tmp
@@ -26,19 +27,21 @@ HTML_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g
 RSS_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g' -e 's/.sh/.frag.rss.xml/g' | sort -nr)
 SITEMAP_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g' -e 's/.sh/.frag.sitemap.xml/g' | sort -nr)
 ARTICLE_FILES=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(DOMAIN)@g' -e 's/.sh/.html/g')
+ALL_FILES=$(DOMAIN)/index.html $(DOMAIN)/index.rss.xml $(DOMAIN)/sitemap.xml $(ARTICLE_FILES)
 
 # ------------------------------------------------------------------------------
 # Default Rule
 # ------------------------------------------------------------------------------
 
 # Build everything
-build: $(DOMAIN)/index.html $(DOMAIN)/index.rss.xml $(DOMAIN)/sitemap.xml $(ARTICLE_FILES) $(RSS_FRAGS) $(SITEMAP_FRAGS)
+build: $(ALL_FILES)
 	@echo "Opening $< in a browser"
 	@$(BROWSER) $< > /dev/null
 
-publish:
-	aws-vault exec personal -- aws s3 sync --dryrun s3://www.syntacticbayleaves.com/ www.syntacticbayleaves.com/
-	aws-vault exec personal -- aws s3 sync --dryrun www.syntacticbayleaves.com/ s3://www.syntacticbayleaves.com/
+# Sync changed files to s3. aws-vault will prompt for the aws credentials's passphrase
+publish: $(ALL_FILES)
+	@aws-vault exec $(AWS_PROFILE) -- aws s3 sync --acl public-read $(DOMAIN)/ s3://$(DOMAIN)/
+	@$(BROWSER) http://$(DOMAIN)/ > /dev/null
 
 # ------------------------------------------------------------------------------
 # Html Rules
