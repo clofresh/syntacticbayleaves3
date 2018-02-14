@@ -7,7 +7,7 @@ export BLOG_BODY=$(cat <<TEXT
 
 <p>After reading a rant about <a href="http://www.ai-blog.net/archives/000152.html">game pathfinding</a>, I decided to represent my search states as vertices of navigable rectangles, or navmesh, on my tile map, and actions as displacement vectors. My sprites would be able to take a list of displacement vectors and queue up a bunch of actions that will move the sprites along those displacement vectors at a given velocity. This is a sample of a sprite moving to a northern area, a western area, and eastern area and back to the northern area:</p>
 
-<iframe width="480" height="360" src="http://www.youtube.com/embed/e_OrsJDrkrY?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="480" height="360" src="https://www.youtube.com/embed/e_OrsJDrkrY?rel=0" frameborder="0" allowfullscreen></iframe>
 
 <p>Moving the sprite in black from one area to another requires a new search, and once the sprite finishes the actions from that search, it executes another search to get to the next area. Notice that she tries to avoid trees and walks along the edge of the path. What's nice is that I can define the navigable areas, as well as possible goal areas in my Tiled map editor.</p>
 

@@ -1,7 +1,7 @@
 export BLOG_ID=00000008
 export BLOG_TITLE="Making animated gifs from command line"
 export BLOG_BODY=$(cat <<TEXT
-<p><img src="http://media.tumblr.com/e25cefe03c15ac186ef40869cb5f2ade/tumblr_inline_mipkz3mxjb1qz4rgp.gif"/></p>
+<p><img src="https://media.tumblr.com/e25cefe03c15ac186ef40869cb5f2ade/tumblr_inline_mipkz3mxjb1qz4rgp.gif"/></p>
 
 <p>Sometimes when you're watching your favorite show, a perfect moment comes along that you just gotta capture and share with everyone. That's where the animated gif comes in. Though they're really popular with the kids these days, they're surprisingly hard to make. Luckily there's some powerful open source command line tools that can help you: <a href="http://www.ffmpeg.org/">ffmpeg</a>, <a href="http://www.imagemagick.org/">ImageMagick</a> and <a href="http://www.lcdf.org/gifsicle/">gifsicle</a>. If you're on OS X and have <a href="http://mxcl.github.com/homebrew/">Homebrew</a> set up, all you have to do is run:</p>
 
@@ -33,7 +33,7 @@ export BLOG_BODY=$(cat <<TEXT
 
 <p>Enjoy!</p>
 
-<p><img src="http://media.tumblr.com/4962cbe71edd812d8df1093672870888/tumblr_inline_miqgu6Dwiw1qz4rgp.gif" /></p>
+<p><img src="https://media.tumblr.com/4962cbe71edd812d8df1093672870888/tumblr_inline_miqgu6Dwiw1qz4rgp.gif" /></p>
 TEXT
 )
 export BLOG_DATE="2013-02-27T00:00 EST"

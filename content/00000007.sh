@@ -1,7 +1,7 @@
 export BLOG_ID=00000007
 export BLOG_TITLE="Gangnam, Fox News style"
 export BLOG_BODY=$(cat <<TEXT
-<iframe width="480" height="360" src="http://www.youtube.com/embed/DuFOywDxDcc?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="480" height="360" src="https://www.youtube.com/embed/DuFOywDxDcc?rel=0" frameborder="0" allowfullscreen></iframe>
 
 <p>I saw a funny/racist clip of Bill O'Reilly "analyzing" PSY's Gangnam Style video to try to figure out why it's so popular. The pundit he had on said that it was just a mindless pop song with a good beat and it was meaningless and that's what people are looking for these days.</p>
 
