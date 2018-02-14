@@ -1,8 +1,9 @@
 # Configuration
-BROWSER=/usr/bin/google-chrome-stable
+BROWSER ?= /usr/bin/google-chrome-stable
+DOMAIN ?= www.syntacticbayleaves.com
+AWS_PROFILE ?= personal
+
 SHELL=/bin/bash
-DOMAIN=www.syntacticbayleaves.com
-AWS_PROFILE=personal
 
 # Templates
 TMP_DIR=tmp
@@ -27,7 +28,7 @@ HTML_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g
 RSS_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g' -e 's/.sh/.frag.rss.xml/g' | sort -nr)
 SITEMAP_FRAGS=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(TMP_DIR)@g' -e 's/.sh/.frag.sitemap.xml/g' | sort -nr)
 ARTICLE_FILES=$(shell echo $(CONTENT_FILES) | sed -e 's@$(CONTENT_DIR)@$(DOMAIN)@g' -e 's/.sh/.html/g')
-ALL_FILES=$(DOMAIN)/index.html $(DOMAIN)/index.rss.xml $(DOMAIN)/sitemap.xml $(ARTICLE_FILES)
+ALL_FILES=$(DOMAIN) $(DOMAIN)/index.html $(DOMAIN)/index.rss.xml $(DOMAIN)/sitemap.xml $(ARTICLE_FILES)
 
 # ------------------------------------------------------------------------------
 # Default Rule
@@ -46,6 +47,10 @@ publish: $(ALL_FILES)
 # ------------------------------------------------------------------------------
 # Html Rules
 # ------------------------------------------------------------------------------
+
+# Create the directory
+$(DOMAIN):
+	@mkdir -p $@
 
 # Build the html index
 $(DOMAIN)/index.html: $(HTML_FRAGS) $(HTML_TMPL_FILES)
