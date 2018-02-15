@@ -3,6 +3,14 @@ BROWSER ?= /usr/bin/google-chrome-stable
 DOMAIN ?= www.syntacticbayleaves.com
 AWS_PROFILE ?= personal
 
+# Blog meta
+export BLOG_NAME=Syntactic Bay Leaves
+export BLOG_TITLE=$(BLOG_NAME)
+export BLOG_COMBINED_TITLE=$(BLOG_NAME)
+export BLOG_DESC=Pungent programming, and other topics of note
+export BLOG_AUTHOR=Carlo Cabanilla
+export AUTHOR_TWITTER=@clofresh
+
 SHELL=/bin/bash -eo pipefail
 
 # Templates
@@ -56,13 +64,16 @@ $(DOMAIN):
 # Build the html index
 $(DOMAIN)/index.html: $(HTML_FRAGS) $(HTML_TMPL_FILES)
 	@echo "Generating home page: $@"
-	@envsubst < $(HTML_TMPL_DIR)/header.html > $@
+	@export EXTRA_META=$$(envsubst < $(HTML_TMPL_DIR)/article_meta.html) && \
+		envsubst < $(HTML_TMPL_DIR)/header.html > $@
 	@cat $(HTML_FRAGS) $(HTML_TMPL_DIR)/footer.html >> $@
 
 # Rule for building individual article pages
 $(DOMAIN)/%.html: $(CONTENT_DIR)/%.sh $(TMP_DIR)/%.frag.html $(HTML_TMPL_FILES)
 	@echo "Generating html article: $@"
-	@. $< && export EXTRA_META=$$(envsubst < $(HTML_TMPL_DIR)/article_meta.html) && \
+	@. $< && \
+		export BLOG_COMBINED_TITLE="$${BLOG_TITLE} - $${BLOG_NAME}" && \
+		export EXTRA_META=$$(envsubst < $(HTML_TMPL_DIR)/article_meta.html) && \
 		envsubst < $(HTML_TMPL_DIR)/header.html > $@
 	@F=$< && cat $(TMP_DIR)/$$(basename $$(echo $${F%.sh}.frag.html)) >> $@
 	@cat $(HTML_TMPL_DIR)/footer.html >> $@
