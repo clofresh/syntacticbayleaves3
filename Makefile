@@ -66,7 +66,7 @@ $(DOMAIN)/%.html: $(TMP_DIR)/%.frag.html $(HTML_TMPL_FILES)
 # Rule for building the html fragments
 $(TMP_DIR)/%.frag.html: $(CONTENT_DIR)/%.sh $(HTML_TMPL_DIR)/article.html $(TMP_DIR)
 	@echo "Generating html fragment: $@"
-	@. $< && BLOG_NICE_DATE="$$(date -d "$${BLOG_DATE}" +'${HTML_DATE_FORMAT}')" && \
+	@. $< && export BLOG_NICE_DATE="$$(date -d "$${BLOG_DATE}" +'${HTML_DATE_FORMAT}')" && \
 	envsubst '$${BLOG_ID} $${BLOG_TITLE} $${BLOG_BODY} $${BLOG_NICE_DATE}' \
 		< $(HTML_TMPL_DIR)/article.html > $@
 
