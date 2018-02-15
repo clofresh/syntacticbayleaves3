@@ -32,6 +32,21 @@
     -->
     <link href='https://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
 
+    <script src="js/prism.js"></script>
+
+    <!-- Add back link on individual articles -->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function(event) {
+        if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") {
+          var els = document.getElementsByClassName('back-home')
+          for (var i = 0; i < els.length; i++ ) {
+            els[i].innerHTML = '<a href="/" title="There\'s more bloggliness where that came from."><i class="icon-arrow-left"></i> Go back home</a>'
+          }
+        }
+      })
+    </script>
+
+    <!-- Google Analytics -->
     <script type="text/javascript">
 
       var _gaq = _gaq || [];

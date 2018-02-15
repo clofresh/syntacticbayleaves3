@@ -38,6 +38,21 @@
     -->
     <link href='https://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
 
+    <script src="js/prism.js"></script>
+
+    <!-- Add back link on individual articles -->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function(event) {
+        if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") {
+          var els = document.getElementsByClassName('back-home')
+          for (var i = 0; i < els.length; i++ ) {
+            els[i].innerHTML = '<a href="/" title="There\'s more bloggliness where that came from."><i class="icon-arrow-left"></i> Go back home</a>'
+          }
+        }
+      })
+    </script>
+
+    <!-- Google Analytics -->
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -131,10 +146,6 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
         <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
       </p>
     </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/syntacticbayleaves.js"></script>
-    <script src="js/prism.js"></script>
   </body>
 
 </html>
