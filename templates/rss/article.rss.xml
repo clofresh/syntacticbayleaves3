@@ -1,7 +1,7 @@
     <item>
       <title>${BLOG_TITLE}</title>
       <description><![CDATA[${BLOG_BODY}]]></description>
-      <link>http://www.syntacticbayleaves.com/${BLOG_ID}.html</link>
-      <guid>http://www.syntacticbayleaves.com/${BLOG_ID}.html</guid>
+      <link>https://${DOMAIN}/${BLOG_ID}.html?slug=${BLOG_SLUG}</link>
+      <guid>https://${DOMAIN}/${BLOG_ID}.html?slug=${BLOG_SLUG}</guid>
       <pubDate>${BLOG_GMT_DATE}</pubDate>
     </item>

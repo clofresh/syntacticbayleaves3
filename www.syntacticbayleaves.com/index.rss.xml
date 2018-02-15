@@ -4,8 +4,8 @@
     <title>Syntactic Bay Leaves</title>
     <description>Pungent programming, and other topics of note</description>
     <link>http://www.syntacticbayleaves.com/</link>
-    <lastBuildDate>Thu, 15 Feb 2018 01:23:36 GMT</lastBuildDate>
-    <pubDate>Thu, 15 Feb 2018 01:23:36 GMT</pubDate>
+    <lastBuildDate>Thu, 15 Feb 2018 19:50:33 GMT</lastBuildDate>
+    <pubDate>Thu, 15 Feb 2018 19:50:33 GMT</pubDate>
     <ttl>60</ttl>
     <item>
       <title>Syntactic Bay Leaves is now HTTPS-secured</title>
@@ -19,8 +19,8 @@
 <p>Anyways, I went with <a href="https://www.cloudflare.com/plans/">Cloudflare</a> since they have a free plan the lets me use their shared TLS certificate, with the added bonus of caching the contents to shave millipennies off of the pennies I pay for S3 hosting.</p>
 
 <p>And now you can peruse this blog without fear. Enjoy.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000011.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000011.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000011.html?slug=syntactic-bay-leaves-is-now-https-secured</link>
+      <guid>https://www.syntacticbayleaves.com/00000011.html?slug=syntactic-bay-leaves-is-now-https-secured</guid>
       <pubDate>Wed, 14 Feb 2018 23:08:00 GMT</pubDate>
     </item>
     <item>
@@ -117,8 +117,8 @@ right_layout:add(tempwidget)
 <p>This all feels nicely Linuxly. I didn't have to spin up a new app with
 complicated GUI dependencies just to get a simple value that I could
 already get from command line.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000010.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000010.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000010.html?slug=making-a-simple-awesomewm-widget</link>
+      <guid>https://www.syntacticbayleaves.com/00000010.html?slug=making-a-simple-awesomewm-widget</guid>
       <pubDate>Mon, 19 Jun 2017 01:09:00 GMT</pubDate>
     </item>
     <item>
@@ -148,8 +148,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
   <li><p><strong>--session-ttl</strong> - Defaults to 4h but for increased security, you can reduce that time. Conversely, if you get tired of recreating your <code>aws-vault</code> session, you can increase the time, though it increases the amount of time a bad guy has to use your creds if your machine gets stolen.</p></li>
   <li><p><strong>--mfa-token</strong> - If you have <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html">multi-factor auth</a> enabled on your IAM account, you can pass those tokens into <code>aws-vault</code></p></li>
 </ul>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000009.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000009.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000009.html?slug=encrypt-your-local-aws-credentials-with-aws-vault</link>
+      <guid>https://www.syntacticbayleaves.com/00000009.html?slug=encrypt-your-local-aws-credentials-with-aws-vault</guid>
       <pubDate>Sun, 04 Jun 2017 07:00:00 GMT</pubDate>
     </item>
     <item>
@@ -187,8 +187,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 <p>Enjoy!</p>
 
 <p><img src="https://media.tumblr.com/4962cbe71edd812d8df1093672870888/tumblr_inline_miqgu6Dwiw1qz4rgp.gif" /></p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000008.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000008.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000008.html?slug=making-animated-gifs-from-command-line</link>
+      <guid>https://www.syntacticbayleaves.com/00000008.html?slug=making-animated-gifs-from-command-line</guid>
       <pubDate>Wed, 27 Feb 2013 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -226,8 +226,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 <p>We start small businesses, creating jobs despite not benefiting from the "job creator" tax cuts. We don't rely on state assistance when we're old or sick or down on our luck because we have a strong family-oriented culture that has us take care of each other when we're in trouble. We do whatever it takes to excel in the broken school system so we don't have to go through the same economic hardships our parents went through. But Asians don't exist on the political radar, so it's ok to blatantly discrimint against.</p>
 
 <p>Fuck that, I'm so tired of that shit.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000007.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000007.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000007.html?slug=gangnam-fox-news-style</link>
+      <guid>https://www.syntacticbayleaves.com/00000007.html?slug=gangnam-fox-news-style</guid>
       <pubDate>Sun, 02 Dec 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -247,8 +247,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 </p>
 
 <p>Next, I might either continue on with the exposition side of things and add dialogue and transitioning between scenes, or maybe add some fighting again.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000006.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000006.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000006.html?slug=adventure-game-prototype-2-a-pathfinding</link>
+      <guid>https://www.syntacticbayleaves.com/00000006.html?slug=adventure-game-prototype-2-a-pathfinding</guid>
       <pubDate>Mon, 15 Oct 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -262,8 +262,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 <p>I also updated the code to pull more data about the dynamic sprites from the .tmx map file in addition to the background tiles. Since the <a href="http://www.mapeditor.org/">Tiled</a> is such a great free standards-based .tmx map editor, having my game engine read object data from .tmx files will let me focus on map design instead of technical details. It would also let me collaborate on maps with people who may not know how to code, which is helpful.</p>
 
 <p>There's still some work to be done to fix my collision handling code, it makes my character warp around when colliding with a tree. I also need to get the melee attacks going, probably going to have placeholder animations for individual attacks since the sprites aren't meant for fighting games. I'd also like to have a scriptable camera so that I can do interesting things with it, like panning and zooming across the scenery instead of always focusing on the player.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000005.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000005.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000005.html?slug=adventure-game-prototype-1-new-art-better-editor-integration</link>
+      <guid>https://www.syntacticbayleaves.com/00000005.html?slug=adventure-game-prototype-1-new-art-better-editor-integration</guid>
       <pubDate>Sat, 29 Sep 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -279,8 +279,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 <p>I'll need to figure out what actual attacks will be available for the player and for the first few enemies and do my own art for it instead of ripping River City Ransom. Also gotta implement mundane things like getting obstructed by objects in the background, losing health and dying, tracking and improving player stats, etc.</p>
 
 <p>I'll keep you posted.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000004.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000004.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000004.html?slug=adventure-game-prototype</link>
+      <guid>https://www.syntacticbayleaves.com/00000004.html?slug=adventure-game-prototype</guid>
       <pubDate>Sat, 22 Sep 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -296,8 +296,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 <p><img src="img/00000003-bluelounge-before-after.jpg" title="Before and after Bluelounge's CableBox" /></p>
 
 <p>I couldn't be happier with my CableBox. Less cluster in my life = huge win.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000003.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000003.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000003.html?slug=cleaning-up-that-mess-of-wires</link>
+      <guid>https://www.syntacticbayleaves.com/00000003.html?slug=cleaning-up-that-mess-of-wires</guid>
       <pubDate>Thu, 29 Mar 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -332,8 +332,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
   <li class="span2"><a href="img/00000002-gnome-shell.png"><img src="img/00000002-gnome-shell.png" /></a></li>
   <li class="span2"><a href="img/00000002-gtile.png"><img src="img/00000002-gtile.png" /></a></li>
 </ul>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000002.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000002.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000002.html?slug=switching-from-os-x-to-linux-mint-12</link>
+      <guid>https://www.syntacticbayleaves.com/00000002.html?slug=switching-from-os-x-to-linux-mint-12</guid>
       <pubDate>Mon, 20 Feb 2012 05:00:00 GMT</pubDate>
     </item>
     <item>
@@ -342,8 +342,8 @@ Enter passphrase to unlock /home/carlo/.awsvault/keys:
 I'm moving away from a database-backed blog to a more simple static site. Gotta
 figure how how to make it easy to post to. Maybe this will encourage me to write
 longer form posts, instead of knee-jerk links.</p>]]></description>
-      <link>http://www.syntacticbayleaves.com/00000001.html</link>
-      <guid>http://www.syntacticbayleaves.com/00000001.html</guid>
+      <link>https://www.syntacticbayleaves.com/00000001.html?slug=hello-world-3</link>
+      <guid>https://www.syntacticbayleaves.com/00000001.html?slug=hello-world-3</guid>
       <pubDate>Sun, 19 Feb 2012 05:00:00 GMT</pubDate>
     </item>
   </channel>

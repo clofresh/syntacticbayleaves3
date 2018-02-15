@@ -1,6 +1,6 @@
 # Configuration
 BROWSER ?= /usr/bin/google-chrome-stable
-DOMAIN ?= www.syntacticbayleaves.com
+export DOMAIN ?= www.syntacticbayleaves.com
 AWS_PROFILE ?= personal
 
 # Blog meta
@@ -71,7 +71,7 @@ $(DOMAIN)/index.html: $(HTML_FRAGS) $(HTML_TMPL_FILES)
 # Rule for building individual article pages
 $(DOMAIN)/%.html: $(CONTENT_DIR)/%.sh $(TMP_DIR)/%.frag.html $(HTML_TMPL_FILES)
 	@echo "Generating html article: $@"
-	@. $< && \
+	@. bash/vars.sh $< && \
 		export BLOG_COMBINED_TITLE="$${BLOG_TITLE} - $${BLOG_NAME}" && \
 		export EXTRA_META=$$(envsubst < $(HTML_TMPL_DIR)/article_meta.html) && \
 		envsubst < $(HTML_TMPL_DIR)/header.html > $@
@@ -81,7 +81,7 @@ $(DOMAIN)/%.html: $(CONTENT_DIR)/%.sh $(TMP_DIR)/%.frag.html $(HTML_TMPL_FILES)
 # Rule for building the html fragments
 $(TMP_DIR)/%.frag.html: $(CONTENT_DIR)/%.sh $(HTML_TMPL_DIR)/article.html $(TMP_DIR)
 	@echo "Generating html fragment: $@"
-	@. $< && export BLOG_NICE_DATE="$$(date -d "$${BLOG_DATE}" +'${HTML_DATE_FORMAT}')" && \
+	@. bash/vars.sh $< && export BLOG_NICE_DATE="$$(date -d "$${BLOG_DATE}" +'${HTML_DATE_FORMAT}')" && \
 		envsubst < $(HTML_TMPL_DIR)/article.html > $@
 
 
@@ -99,7 +99,7 @@ $(DOMAIN)/index.rss.xml: $(RSS_FRAGS) $(RSS_TMPL_FILES)
 # Rules for building the rss fragments
 $(TMP_DIR)/%.frag.rss.xml: $(CONTENT_DIR)/%.sh $(RSS_TMPL_DIR)/article.rss.xml $(TMP_DIR)
 	@echo "Generating rss fragment: $@"
-	@. $< && export BLOG_GMT_DATE="$$(date -ud "$${BLOG_DATE}" +'${RSS_DATE_FORMAT}')" && \
+	@. bash/vars.sh $< && export BLOG_GMT_DATE="$$(date -ud "$${BLOG_DATE}" +'${RSS_DATE_FORMAT}')" && \
 		envsubst < $(RSS_TMPL_DIR)/article.rss.xml > $@
 
 
@@ -117,7 +117,7 @@ $(DOMAIN)/sitemap.xml: $(SITEMAP_FRAGS) $(SITEMAP_TMPL_FILES)
 # Rules for building the sitemap fragments
 $(TMP_DIR)/%.frag.sitemap.xml: $(CONTENT_DIR)/%.sh $(SITEMAP_TMPL_DIR)/article.xml $(TMP_DIR)
 	@echo "Generating sitemap fragment: $@"
-	@. $< && export BLOG_ISO8601_DATE="$$(date -ud "$${BLOG_DATE}" +'$(SITEMAP_DATE_FORMAT)')" && \
+	@. bash/vars.sh $< && export BLOG_ISO8601_DATE="$$(date -ud "$${BLOG_DATE}" +'$(SITEMAP_DATE_FORMAT)')" && \
 		envsubst < $(SITEMAP_TMPL_DIR)/article.xml > $@
 
 
