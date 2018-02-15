@@ -4,9 +4,25 @@
     <title>Syntactic Bay Leaves</title>
     <description>Pungent programming, and other topics of note</description>
     <link>http://www.syntacticbayleaves.com/</link>
-    <lastBuildDate>Wed, 14 Feb 2018 23:02:23 GMT</lastBuildDate>
-    <pubDate>Wed, 14 Feb 2018 23:02:23 GMT</pubDate>
+    <lastBuildDate>Thu, 15 Feb 2018 00:33:50 GMT</lastBuildDate>
+    <pubDate>Thu, 15 Feb 2018 00:33:50 GMT</pubDate>
     <ttl>60</ttl>
+    <item>
+      <title>Syntactic Bay Leaves is now HTTPS-secured</title>
+      <description><![CDATA[<p>Now that Chrome is shaming everyone into using HTTPS and crypto kiddies are <a href="https://arnaucode.com/blog/coffeeminer-hacking-wifi-cryptocurrency-miner.html">man-in-the-middleing you with javascript miners</a>, I decided it's time to convertthe ol blog to HTTPS.</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A secure web is here to stay! Chrome will mark all HTTP sites as &quot;Not secure&quot; in July 2018. 🔐⚠️ <a href="https://t.co/hcIqQvYHUM">https://t.co/hcIqQvYHUM</a></p>&mdash; Google Chrome (@googlechrome) <a href="https://twitter.com/googlechrome/status/961732373451653120?ref_src=twsrc%5Etfw">February 8, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I host this blog as an S3 <a href="https://github.com/clofresh/syntacticbayleaves3">static site</a>, but s3 doesn't offer HTTPS for their buckets. I could use Cloudfront it always felt a little clunky when I worked with it in the past. That said, after doing some after-the-fact research, I found that someone has create <a href="https://github.com/ringods/terraform-website-s3-cloudfront-route53">some Terraform modules</a> to automate this very thing.</p>
+
+<p>Anyways, I went with <a href="https://www.cloudflare.com/plans/">Cloudflare</a> since they have a free plan the lets me use their shared TLS certificate, with the added bonus of caching the contents to shave millipennies off of the pennies I pay for S3 hosting.</p>
+
+<p>And now you can peruse this blog without fear. Enjoy.</p>]]></description>
+      <link>http://www.syntacticbayleaves.com/00000011.html</link>
+      <guid>http://www.syntacticbayleaves.com/00000011.html</guid>
+      <pubDate>Wed, 14 Feb 2018 23:08:00 GMT</pubDate>
+    </item>
     <item>
       <title>Making a simple AwesomeWM widget</title>
       <description><![CDATA[<p>It's been a long time since I <a href="00000002.html">switched to Linux</a>,

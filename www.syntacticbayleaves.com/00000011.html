@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Syntactic Bay Leaves</title>
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/prism.css" rel="stylesheet" />
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='https://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="https://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000011">
+    <h2>
+      <a name="post-00000011" class="permalink icon-bookmark" href="00000011.html">&nbsp;</a>
+      <span class="title">Syntactic Bay Leaves is now HTTPS-secured</span>
+      <small class="date"></small>
+    </h2>
+    <div class="body">
+    <p>Now that Chrome is shaming everyone into using HTTPS and crypto kiddies are <a href="https://arnaucode.com/blog/coffeeminer-hacking-wifi-cryptocurrency-miner.html">man-in-the-middleing you with javascript miners</a>, I decided it's time to convertthe ol blog to HTTPS.</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A secure web is here to stay! Chrome will mark all HTTP sites as &quot;Not secure&quot; in July 2018. 🔐⚠️ <a href="https://t.co/hcIqQvYHUM">https://t.co/hcIqQvYHUM</a></p>&mdash; Google Chrome (@googlechrome) <a href="https://twitter.com/googlechrome/status/961732373451653120?ref_src=twsrc%5Etfw">February 8, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I host this blog as an S3 <a href="https://github.com/clofresh/syntacticbayleaves3">static site</a>, but s3 doesn't offer HTTPS for their buckets. I could use Cloudfront it always felt a little clunky when I worked with it in the past. That said, after doing some after-the-fact research, I found that someone has create <a href="https://github.com/ringods/terraform-website-s3-cloudfront-route53">some Terraform modules</a> to automate this very thing.</p>
+
+<p>Anyways, I went with <a href="https://www.cloudflare.com/plans/">Cloudflare</a> since they have a free plan the lets me use their shared TLS certificate, with the added bonus of caching the contents to shave millipennies off of the pennies I pay for S3 hosting.</p>
+
+<p>And now you can peruse this blog without fear. Enjoy.</p>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="https://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="https://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2018 Carlo Cabanilla
+        <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/syntacticbayleaves.js"></script>
+    <script src="js/prism.js"></script>
+  </body>
+
+</html>
