@@ -22,9 +22,6 @@ footer .license {
   display: block;
   vertical-align: top;
 }
-nav * {
-  opacity: 75%;
-}
 article .permalink {
   position: relative;
   top: 5px;
@@ -51,3 +48,7 @@ header img.feed {
   width: 14px;
   height: 14px;
 }
+.text-center {
+  text-align: center;
+}
+

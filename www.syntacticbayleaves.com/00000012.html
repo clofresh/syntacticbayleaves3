@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+        <title>Using an egpu on Linux - Syntactic Bay Leaves</title>
+    <meta name="description" content="Pungent programming, and other topics of note">
+    <meta name="author" content="Carlo Cabanilla">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Using an egpu on Linux">
+    <meta name="twitter:site" content="@clofresh">
+    <meta property="og:site_name" content="Syntactic Bay Leaves" />
+
+    <!-- OpenID delegation -->
+    <link rel="openid2.provider"
+      href="https://www.google.com/accounts/o8/ud?source=profiles">
+    <link rel="openid2.local_id"
+      href="https://plus.google.com/u/1/107061127726805374925/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/prism.css" rel="stylesheet" />
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/syntacticbayleaves.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Syntactic Bay Leaves RSS 2.0" href="http://feeds.feedburner.com/syntacticbayleaves/fshk" />
+
+    <!-- For IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link href='https://fonts.googleapis.com/css?family=Balthazar|Inconsolata' rel='stylesheet' type='text/css'>
+
+    <script src="js/prism.js"></script>
+
+    <!-- Add back link on individual articles -->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function(event) {
+        if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") {
+          var els = document.getElementsByClassName('back-home')
+          for (var i = 0; i < els.length; i++ ) {
+            els[i].innerHTML = '<a href="/" title="There\'s more bloggliness where that came from."><i class="icon-arrow-left"></i> Go back home</a>'
+          }
+        }
+      })
+    </script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4116300-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body class="container">
+    <header class="page-header">
+      <h1><a href="/">Syntactic Bay Leaves</a>
+        <small>Pungent programming, and other topics of note</small>
+        <a href="https://feeds.feedburner.com/syntacticbayleaves/fshk"><img class="feed" src="img/feed-icon.svg" rel="alternate" type="application/rss+xml" /></a>
+      </h1>
+
+    </header>
+
+
+    <div class="row content">
+      <section class="offset1 span8 posts">
+  <article id="post-00000012">
+    <h2>
+      <a name="post-00000012" class="permalink icon-bookmark" href="00000012.html?slug=using-an-egpu-on-linux">&nbsp;</a>
+      <span class="title">Using an egpu on Linux</span>
+      <small class="date"></small>
+    </h2>
+    <div class="body">
+    <p>I've written previously about <a href="00000010.html">getting a Thunderbolt
+dock</a> to power my external monitor and it's been mostly fine. I can plug
+my monitor, speakers and usb devices into it and just have one Thunderbolt
+cable to plug into my XPS 13 and get access to all the good stuff.</p>
+
+<p>My one complaint is that even though my external monitor doesn't stutter
+anymore, performance wasn't as good as it could be. General windowing operations
+still had noticable lag, my laptop got super hot when it was driving the monitor,
+and games were still pretty much unplayable on due to poor framerate.</p>
+
+<p>I've been following the progress of <a href="https://egpu.io/">external graphics cards</a>
+(egpus), and it sounded like they're pretty much plug and play, at least for Windows,
+and more and more OS X. There haven't been too many reports of it working on Linux,
+but emboldened by my excellent experience running Arch, I took the plunge and
+bought a <a href="https://www.amazon.com/dp/B072L9QTZT/">Sonnet eGFX Breakaway Box</a>
+and a secondhand <a href="https://www.geforce.com/hardware/desktop-gpus/geforce-gtx-660">Nvidia GTX 660</a>.</p>
+
+<div class="text-center"><img src="img/00000012-sonnet-egfx.png" alt="Sonnet eGFX Breakaway Box" /></div>
+
+<p>After I got everything and plugged the graphics card into the Sonnet enclosure,
+I installed the <code>nvidia-dkms</code> package and dependencies, plugged the egpu into my
+dock's Thunderbolt port, plugged my XPS into my dock and everything just worked!</p>
+
+<p>X found the second gpu just fine and rendered the second monitor as an extension
+of the laptop monitor the same way I had it with the single integrated gpu.</p>
+
+<p>General windowing performance was snappy. Full screen YouTube videos on the
+monitor didn't burn up my laptop. Framerate on simpler games like Don't Starve
+and Rimworld was excellent, in the 60s, and games like XCOM2 and Everspace were
+playable in the 20s. Everything was just how it should be for the most part.</p>
+
+<p>The only annoying thing now is that I can't hotunplug the egpu out. I have to
+poweroff my laptop before unplugging it from the egpu, which is kind of a drag.
+If I don't, everything just freezes. Hopefully as more people get egpus on Linux,
+kernel/driver/xorg devs will fix this issue. If you're working on it, drop me a
+line, I'm happy to test stuff!</p>
+
+<p>Besides hotplugging, everything was great. Until I got a dreaded breaking
+change in the nvidia drivers 😱</p>
+
+<p>Upgrading from nvidia driver version 390.48 to 396.24 caused my X to crash
+on bootup. After digging in the X logs (<code>/var/log/Xorg.0.log</code>) I found:</p>
+
+<pre><code class="language-config">[    23.631] (WW) NVIDIA(GPU-0): This device is an external GPU, but external GPUs have not
+[    23.631] (WW) NVIDIA(GPU-0):     been enabled with AllowExternalGpus. Disabling this device
+[    23.631] (WW) NVIDIA(GPU-0):     to prevent crashes from accidental removal.
+[    23.694] (EE) NVIDIA(0): Failing initialization of X screen 0
+</code></pre>
+
+<p>Kind of ironic that it did end up causing a crash anyway.</p>
+
+<p>I was kind of annoyed that I had to add this new X option because I had 0 X
+config. Everything was configured dynamically, and I set my desktop
+resolution and positioning using an xrandr script at startup.</p>
+
+<p>At first I thought I had to configure EVERY. SINGLE. THING statically
+in xorg config and was super frustrated that I couldn't get X to merge
+my two monitors with static config.</p>
+
+<p>Eventually I figured out that I can still let xrandr do most of the work,
+I just needed to define my devices. This is the config I ended up with:</p>
+
+<pre><code class="language-config">Section "Monitor"
+	Identifier   "Laptop"
+	VendorName   "Dell"
+	Option "Below" "External"
+	Option "DPMS" "true"
+EndSection
+
+Section "Monitor"
+	Identifier   "External"
+	VendorName   "Asus"
+	Option "Above" "Laptop"
+	Option "DPMS" "true"
+EndSection
+
+Section "Device"
+	Identifier  "gtx660"
+	Driver      "nvidia"
+	BusID       "PCI:12:0:0"
+	Option      "AllowExternalGpus" "True"
+	Option      "Monitor-HDMI-0" "External"
+EndSection
+
+Section "Device"
+	Identifier  "iris"
+	Driver      "modesetting"
+	BusID       "PCI:0:2:0"
+	Option      "Monitor-eDP-1-1" "Laptop"
+EndSection
+</code></pre>
+
+<p>And then everything was fine again! Unfortunately, hotswapping still didn't
+work even with the new AllowExternalGpus option. But I could upgrade to the
+latest packages and everything was back to normal!</p>
+
+<div class="text-center"><img src="img/00000012-egpu-workstation.jpg" alt="My workstation with the dual monitors and egpu" /></div>
+
+<p>Hooray for Linux continuing to be a great option as an everyday workstation.</p>
+    </div>
+  </article>
+        <div class="back-home"></div>
+      </section><!-- /posts -->
+      <nav class="offset1 span2">
+          <h3>Facets of me</h3>
+          <ul>
+            <li><a  href="https://www.datadoghq.com/"
+                    title="Workplace of awesome">Datadog</a></li>
+            <li><a  href="projects.html"
+                    title="Projects that I work on in my spare time">Projects</a></li>
+            <li><a  href="https://github.com/clofresh"
+                    title="Various code tinkerings"
+                    rel="me">Github</a></li>
+            <li><a  href="https://twitter.com/clofresh"
+                    title="Programming-related pith &amp; wit"
+                    rel="me">Twitter</a></li>
+            <li><a  href="https://www.facebook.com/clofresh"
+                    title="Life &amp; pop culture &amp; stalking"
+                    rel="me">Facebook</a></li>
+            <li><a  href="https://clofresh.tumblr.com/"
+                    title="Digital scrapbook of awesome"
+                    rel="me">Tumblr</a></li>
+        </ul>
+      </nav><!-- /nav -->
+    </div><!-- /content -->
+
+    <hr />
+    <footer class="footer">
+      <p class="license">
+        &copy; 2018 Carlo Cabanilla
+        <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+      </p>
+    </footer>
+  </body>
+
+</html>

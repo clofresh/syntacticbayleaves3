@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.syntacticbayleaves.com/00000012.html?slug=using-an-egpu-on-linux</loc>
+    <lastmod>2018-05-24</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.syntacticbayleaves.com/00000011.html?slug=syntactic-bay-leaves-is-now-https-secured</loc>
     <lastmod>2018-02-14</lastmod>
     <changefreq>never</changefreq>
@@ -68,7 +74,7 @@
   </url>
   <url>
     <loc>http://www.syntacticbayleaves.com/</loc>
-    <lastmod>2018-02-15</lastmod>
+    <lastmod>2018-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
